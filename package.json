@@ -1,0 +1,19 @@
+{
+  "name": "todolist-calendar",
+  "version": "1.0.0",
+  "description": "A simple calendar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Espar-RodBar/Todolist-calendar.git"
+  },
+  "author": "Espar-Rodbar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Espar-RodBar/Todolist-calendar/issues"
+  },
+  "homepage": "https://github.com/Espar-RodBar/Todolist-calendar#readme"
+}

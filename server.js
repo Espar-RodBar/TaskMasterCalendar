@@ -4,7 +4,7 @@ const connectDB = require('./config/database')
 require('dotenv').config()
 
 // Connect to mongo
-connectDB()
+// connectDB()
 
 const app = express()
 
@@ -23,10 +23,11 @@ app.use(
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-var auth = function (req, res, next) {
-  if (req.session && req.session.user === myusername && req.session.admin)
+var auth = function (request, response, next) {
+  if (request.session && request.session.user === myusername) {
+    console.log('middleware', request.session)
     return next()
-  else return res.sendStatus(401)
+  } else response.redirect('/login')
 }
 
 //serving public file
@@ -39,20 +40,21 @@ const mypassword = '88888888'
 // a variable to save a session
 let session
 
-app.get('/', (request, response) => {
-  console.log('/', request.session)
+app.get('/login', (request, response) => {
+  console.log('index', request.session)
   session = request.session
   if (session.userid) {
-    response.send("Welcome User <a href='/logout'>click to logout</a>")
-  } else response.sendFile('views/index.html', {})
+    response.redirect('/content')
+  } else response.sendFile(__dirname + '/views/index.html')
 })
 
 app.post('/user', (request, response) => {
+  console.log('on /user:', request.body)
   if (
-    request.query.username == myusername &&
-    request.query.password == mypassword
+    request.body.username == myusername &&
+    request.body.password == mypassword
   ) {
-    request.session.user = request.query.username
+    request.session.user = request.body.username
     console.log(request.session)
     response.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`)
   } else {
@@ -61,7 +63,7 @@ app.post('/user', (request, response) => {
 })
 
 // Get content endpoint
-app.get('/content', auth, function (req, res) {
+app.get('/', auth, function (req, res) {
   res.send("You can only see this after you've logged in.")
 })
 
@@ -71,5 +73,5 @@ app.get('/logout', (request, response) => {
 })
 
 app.listen(8000, () => {
-  console.log('server running')
+  console.log('server running...')
 })

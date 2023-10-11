@@ -6,6 +6,7 @@ const task = new Schema({
   user: { type: number, required: false },
   startDate: { type: date, required: true },
   endDate: { type: date, required: true },
+  deleted: { type: Boolean, default: false },
 })
 
-module.task
+module.exports = mongoose.model('Task', schema)

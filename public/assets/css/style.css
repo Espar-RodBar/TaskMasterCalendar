@@ -1,3 +1,14 @@
+:root {
+  --light-red-color: rgb(230, 100, 100);
+  --light-blue-color: rgb(80, 190, 220);
+  --light-green-color: rgb(90, 220, 160);
+  --main-red-color: rgb(200, 60, 40);
+  --main-blue-color: rgb(20, 160, 200);
+  --main-green-color: rgb(40, 160, 100);
+  --dark-red-color: rgb(150, 42, 27);
+  --dark-blue-color: rgb(20, 110, 150);
+  --dark-green-color: rgb(40, 110, 50);
+}
 body {
   display: flex;
   justify-content: center;
@@ -21,10 +32,24 @@ form .input-field:first-child {
   margin-bottom: 1.5rem;
 }
 
-form input[type='submit'] {
-  background: linear-gradient(to left, #4776e6, #8e54e9);
+form button {
+  background: linear-gradient(
+    to right,
+    var(--light-red-color),
+    var(--main-red-color)
+  );
   color: white;
   border-radius: 4px;
   margin-top: 2rem;
   padding: 0.4rem;
+  transition: all 0.3s;
+}
+
+form button:hover {
+  background: linear-gradient(
+    to right,
+    var(--main-red-color),
+    var(--dark-red-color)
+  );
+  transform: scale(1.01);
 }

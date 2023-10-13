@@ -59,17 +59,25 @@ app.route('/logout').get((request, response) => {
 
 //////////////////
 // login
-function postLoginHandler(request, response) {
-  console.log('on post /login:', request.body)
-  if (
-    request.body.username == myusername &&
-    request.body.password == mypassword
-  ) {
-    request.session.user = request.body.username
-    //console.log(request.session)
-    response.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`)
-  } else {
-    response.send('Invalid username or password')
+const User = require('./models/user')
+
+async function postLoginHandler(request, response) {
+  const { username, password } = request.body
+
+  const query = User.where({ userName: username, password: password })
+
+  try {
+    const userFound = await query.findOne()
+    if (userFound) {
+      request.session.user = request.body.username
+      response.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`)
+    } else {
+      console.log('Invalid username or password')
+      response.redirect('/login')
+    }
+  } catch (err) {
+    console.log('error on post login: ', err)
+    response.send('error')
   }
 }
 
@@ -83,7 +91,7 @@ function getLoginHnadler(request, response) {
 
 ///////////////////
 // Signup
-const User = require('./models/user')
+//const User = require('./models/user')
 const validator = require('validator')
 
 function getSignUpHandler(request, response) {

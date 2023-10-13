@@ -5,7 +5,7 @@ const logger = require('morgan')
 require('dotenv').config()
 
 // Connect to mongo
-// connectDB()
+connectDB()
 
 const app = express()
 
@@ -40,22 +40,26 @@ app.use(express.static('public'))
 //username and password
 let myusername = 'espar'
 let mypassword = '88888888'
+let myname = ''
 
 // a variable to save a session
 let session
 
-app.route('/login').get(handlerGetLogin).post(handlerPostLogin)
+app.route('/login').get(getLoginHnadler).post(postLoginHandler)
 app.route('/').get(auth, function (req, res) {
   res.send("You can only see this after you've logged in.")
 })
-app.route('/signup').get(handlerGetSignUp).post(handlerPostSignUp)
+app.route('/signup').get(getSignUpHandler).post(postSignUpHandler)
 app.route('/logout').get((request, response) => {
   request.session.destroy()
   response.redirect('/')
 })
 
 // HANDLERS
-function handlerPostLogin(request, response) {
+
+//////////////////
+// login
+function postLoginHandler(request, response) {
   console.log('on post /login:', request.body)
   if (
     request.body.username == myusername &&
@@ -69,7 +73,7 @@ function handlerPostLogin(request, response) {
   }
 }
 
-function handlerGetLogin(request, response) {
+function getLoginHnadler(request, response) {
   // console.log('get login', request.session)
   session = request.session
   if (session.userid) {
@@ -77,16 +81,39 @@ function handlerGetLogin(request, response) {
   } else response.sendFile(__dirname + '/views/login.html')
 }
 
-function handlerGetSignUp(request, response) {
+///////////////////
+// Signup
+const User = require('./models/user')
+const validator = require('validator')
+
+function getSignUpHandler(request, response) {
   response.sendFile(__dirname + '/views/signup.html')
 }
-function handlerPostSignUp(request, response) {
-  const { username, password } = request.body
-  if (username && password) {
-    myusername = username
-    mypassword = password
-    response.redirect('/login')
+async function postSignUpHandler(request, response) {
+  const { name, username, password } = request.body
+  // check if the fields are not empty and the password is correct
+  if (username && name && password[0] && password[0] === password[1]) {
+    // check if the user exist
+    const userFound = await User.findOne({ userName: username }).exec()
+
+    if (userFound) {
+      console.log('existing user')
+      return response.redirect('/signup')
+    }
+    const dbUser = new User({
+      name: name,
+      userName: username,
+      password: password[0],
+    })
+    try {
+      await dbUser.save()
+      response.redirect('/login')
+    } catch (err) {
+      console.log('Error saving user')
+      response.redirect('/signup')
+    }
   } else {
+    console.log('bad input values')
     response.redirect('/signup')
   }
 }

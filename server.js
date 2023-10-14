@@ -37,11 +37,6 @@ var auth = function (request, response, next) {
 //serving public file
 app.use(express.static('public'))
 
-//username and password
-let myusername = 'espar'
-let mypassword = '88888888'
-let myname = ''
-
 // a variable to save a session
 let session
 

@@ -1,24 +1,67 @@
-window.addEventListener('load', () => {
-  document.getElementById('AddTaskDialog').showModal()
-})
+const nextBtn = document.querySelector('.next-month-btn')
+const prevBtn = document.querySelector('.prev-month-btn')
 
-// date
-const fecha = new Date()
-console.log(fecha)
-const day = fecha.getDay()
-const date = fecha.getDate()
-const month = fecha.getMonth()
-const year = fecha.getFullYear()
-const nowCell = day + date
-const startMonthDay = new Date(year, month, 1).getDay() || 7
-const endMonthLastDate = new Date(year, month + 1, 0).getDate()
+// Date state
+class Calendar {
+  constructor() {
+    this.date = new Date()
+  }
+  getStartingCell(
+    year = this.date.getFullYear(),
+    month = this.date.getMonth()
+  ) {
+    return new Date(year, month, 1).getDay() || 7
+  }
+  getEndMonthLastDate(
+    year = this.date.getFullYear(),
+    month = this.date.getMonth()
+  ) {
+    return new Date(year, month + 1, 0).getDate()
+  }
 
-for (
-  let cell = startMonthDay, date = 1;
-  date <= endMonthLastDate;
-  date++, cell++
-) {
-  document.getElementById(`${cell}`).textContent = date
+  setNextMonth() {
+    this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 1)
+  }
+
+  setPrevMonth() {
+    this.date = new Date(this.date.getFullYear(), this.date.getMonth() - 1)
+  }
+
+  clearCellsCalendar() {
+    for (let cell = 1; cell <= 42; cell++) {
+      document.getElementById(`${cell}`).textContent = ''
+    }
+  }
+
+  populateCalendar() {
+    for (
+      let cell = this.getStartingCell(), date = 1;
+      date <= this.getEndMonthLastDate();
+      date++, cell++
+    ) {
+      document.getElementById(`${cell}`).textContent = date
+    }
+  }
 }
 
-console.log(day, date, month, year)
+const calendar = new Calendar()
+
+// handlers
+function nextMonthHandler() {
+  calendar.setNextMonth()
+  calendar.clearCellsCalendar()
+  calendar.populateCalendar()
+}
+function prevMonthHandler() {
+  calendar.setNextMonth()
+  calendar.clearCellsCalendar()
+  calendar.populateCalendar()
+}
+
+// events
+window.addEventListener('load', () => {
+  calendar.populateCalendar()
+})
+
+nextBtn.addEventListener('click', nextMonthHandler)
+prevBtn.addEventListener('click', prevMonthHandler)

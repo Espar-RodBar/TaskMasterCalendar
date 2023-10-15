@@ -1,10 +1,24 @@
 const nextBtn = document.querySelector('.next-month-btn')
 const prevBtn = document.querySelector('.prev-month-btn')
-
+const monthNameEl = document.querySelector('.month-name')
 // Date state
 class Calendar {
   constructor() {
     this.date = new Date()
+    this.monthNames = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Setiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ]
   }
   getStartingCell(
     year = this.date.getFullYear(),
@@ -29,17 +43,22 @@ class Calendar {
 
   clearCellsCalendar() {
     for (let cell = 1; cell <= 42; cell++) {
-      document.getElementById(`${cell}`).textContent = ''
+      document.getElementById(`cel${cell}`).textContent = ''
     }
   }
 
+  writeMonth(htmlEl) {
+    htmlEl.textContent = `${
+      this.monthNames[this.date.getMonth()]
+    } ${this.date.getFullYear()}`
+  }
   populateCalendar() {
     for (
       let cell = this.getStartingCell(), date = 1;
       date <= this.getEndMonthLastDate();
       date++, cell++
     ) {
-      document.getElementById(`${cell}`).textContent = date
+      document.getElementById(`cel${cell}`).textContent = date
     }
   }
 }
@@ -51,16 +70,19 @@ function nextMonthHandler() {
   calendar.setNextMonth()
   calendar.clearCellsCalendar()
   calendar.populateCalendar()
+  calendar.writeMonth(monthNameEl)
 }
 function prevMonthHandler() {
-  calendar.setNextMonth()
+  calendar.setPrevMonth()
   calendar.clearCellsCalendar()
   calendar.populateCalendar()
+  calendar.writeMonth(monthNameEl)
 }
 
 // events
 window.addEventListener('load', () => {
   calendar.populateCalendar()
+  calendar.writeMonth(monthNameEl)
 })
 
 nextBtn.addEventListener('click', nextMonthHandler)

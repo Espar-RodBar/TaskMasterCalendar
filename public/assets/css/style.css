@@ -54,6 +54,23 @@ form button:hover {
   transform: scale(1.01);
 }
 
+/* CLIENT */
+.calendar th,
+.calendar td {
+  padding: 0.5rem;
+}
+.day-event {
+  background: lightblue;
+  width: 20rem;
+  height: 10rem;
+  align-items: center;
+
+  padding: 1rem;
+}
+.day-event > * {
+  display: inline-block;
+}
+
 /* HELPER */
 .vertical-flex {
   display: flex;

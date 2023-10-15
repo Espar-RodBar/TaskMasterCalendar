@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: true }))
 
 var auth = function (request, response, next) {
   if (request.session && request.session.user === myusername) {
-    // console.log('middleware', request.session)
     return next()
   } else response.redirect('/login')
 }
@@ -40,6 +39,7 @@ app.use(express.static('public'))
 // a variable to save a session
 let session
 
+// Routes
 app.route('/login').get(getLoginHnadler).post(postLoginHandler)
 app.route('/').get(auth, function (req, res) {
   res.send("You can only see this after you've logged in.")
@@ -50,7 +50,19 @@ app.route('/logout').get((request, response) => {
   response.redirect('/')
 })
 
-// HANDLERS
+///////////////
+// Task Data
+const task = {
+  title: '',
+  user: 0,
+  day,
+  month,
+  year,
+  startHour,
+  endHour,
+  deleted: false,
+}
+const taskAr = []
 
 //////////////////
 // login

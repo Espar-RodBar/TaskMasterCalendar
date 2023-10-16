@@ -76,6 +76,39 @@ form button:hover {
   display: inline-block;
 }
 
+/* dialog */
+#AddTaskDialog {
+  position: relative;
+  padding: 3rem 2rem 2rem;
+}
+
+#closeDialogBtn {
+  margin: 0;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+#addTaskBtn {
+  background: linear-gradient(
+    to right,
+    var(--light-green-color),
+    var(--main-green-color)
+  );
+  color: white;
+  border-radius: 4px;
+  margin-top: 2rem;
+  padding: 0.4rem;
+  transition: all 0.3s;
+}
+#addTaskBtn:hover {
+  background: linear-gradient(
+    to right,
+    var(--main-green-color),
+    var(--dark-green-color)
+  );
+  transform: scale(1.01);
+}
 /* HELPER */
 .vertical-flex {
   display: flex;

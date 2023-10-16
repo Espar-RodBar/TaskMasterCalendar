@@ -1,7 +1,9 @@
 const nextBtn = document.querySelector('.next-month-btn')
 const prevBtn = document.querySelector('.prev-month-btn')
 const monthNameEl = document.querySelector('.month-name')
-// Date state
+const calendarTableEl = document.querySelector('#calendar-table')
+const addTaskModalEl = document.querySelector('#AddTaskDialog')
+
 class Calendar {
   constructor() {
     this.date = new Date()
@@ -21,12 +23,14 @@ class Calendar {
       'Diciembre',
     ]
   }
+
   getStartingCell(
     year = this.date.getFullYear(),
     month = this.date.getMonth()
   ) {
     return new Date(year, month, 1).getDay() || 7
   }
+
   getEndMonthLastDate(
     year = this.date.getFullYear(),
     month = this.date.getMonth()
@@ -80,11 +84,17 @@ function nextMonthHandler() {
   calendar.populateCalendar()
   calendar.writeMonth(monthNameEl)
 }
+
 function prevMonthHandler() {
   calendar.setPrevMonth()
   calendar.clearCellsCalendar()
   calendar.populateCalendar()
   calendar.writeMonth(monthNameEl)
+}
+
+function activateDialogHandler(e) {
+  const clickedEl = e.target
+  if (clickedEl.dataset.fulldate) addTaskModalEl.showModal()
 }
 
 // events
@@ -95,3 +105,4 @@ window.addEventListener('load', () => {
 
 nextBtn.addEventListener('click', nextMonthHandler)
 prevBtn.addEventListener('click', prevMonthHandler)
+calendarTableEl.addEventListener('click', activateDialogHandler)

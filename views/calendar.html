@@ -17,7 +17,7 @@
         <div class="wrapper">
           <div class="calendar horizontal-flex">
             <div class="prev-month-btn">◀︎</div>
-            <table>
+            <table id="calendar-table">
               <caption>
                 <span class="month-name">Month</span>
               </caption>
@@ -103,8 +103,9 @@
           <legend>Añade titulo:</legend>
           <label><input type="text" name="task" /> </label>
           <label>Hora inicio:<input type="time" name="time-start" /> </label>
-          <label>Hora final:<input type="time" name="time-end" /> </label
-          ><button>Close</button>
+          <label>Hora final:<input type="time" name="time-end" /> </label>
+          <button id="addTaskBtn">Añadir</button>
+          <button id="closeDialogBtn">X</button>
         </fieldset>
       </form>
     </dialog>

@@ -59,6 +59,11 @@ form button:hover {
 .calendar td {
   padding: 0.5rem;
 }
+
+.row > td.today {
+  box-shadow: inset 0 0 0 2px green;
+}
+
 .day-event {
   background: lightblue;
   width: 20rem;

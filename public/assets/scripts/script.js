@@ -5,6 +5,7 @@ const monthNameEl = document.querySelector('.month-name')
 class Calendar {
   constructor() {
     this.date = new Date()
+    this.todayDateStr = `${this.date.getFullYear()}-${this.date.getMonth()}-${this.date.getDate()}`
     this.monthNames = [
       'Enero',
       'Febrero',
@@ -43,7 +44,10 @@ class Calendar {
 
   clearCellsCalendar() {
     for (let cell = 1; cell <= 42; cell++) {
-      document.getElementById(`cel${cell}`).textContent = ''
+      const cellEl = document.getElementById(`cel${cell}`)
+      cellEl.textContent = ''
+      cellEl.dataset.fulldate = ''
+      cellEl.classList.remove('today')
     }
   }
 
@@ -58,7 +62,11 @@ class Calendar {
       date <= this.getEndMonthLastDate();
       date++, cell++
     ) {
-      document.getElementById(`cel${cell}`).textContent = date
+      const cellEl = document.getElementById(`cel${cell}`)
+      cellEl.textContent = date
+      const fulldateStr = `${this.date.getFullYear()}-${this.date.getMonth()}-${date}`
+      if (fulldateStr === this.todayDateStr) cellEl.classList.add('today')
+      cellEl.dataset.fulldate = fulldateStr
     }
   }
 }

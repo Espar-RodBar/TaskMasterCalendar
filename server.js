@@ -2,6 +2,8 @@ const express = require('express')
 const sessions = require('express-session')
 const connectDB = require('./config/database')
 const logger = require('morgan')
+const cors = require('cors')
+
 require('dotenv').config()
 
 // Connect to mongo
@@ -24,11 +26,12 @@ app.use(
 app.use(logger('tiny'))
 
 // parsing the incoming data
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 var auth = function (request, response, next) {
-  if (request.session && request.session.user === myusername) {
+  if (request.session && request.session.user) {
     return next()
   } else response.redirect('/login')
 }
@@ -41,8 +44,14 @@ let session
 
 // Routes
 app.route('/login').get(getLoginHnadler).post(postLoginHandler)
-app.route('/').get(auth, function (req, res) {
-  res.send("You can only see this after you've logged in.")
+app
+  .route('/')
+  .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
+
+app.route('/tasks').post((request, response) => {
+  console.log('task post')
+  console.log(request.body)
+  response.status(200).send({ status: 200, message: { data: 'recibido' } })
 })
 app.route('/signup').get(getSignUpHandler).post(postSignUpHandler)
 app.route('/logout').get((request, response) => {
@@ -55,11 +64,11 @@ app.route('/logout').get((request, response) => {
 const task = {
   title: '',
   user: 0,
-  day,
-  month,
-  year,
-  startHour,
-  endHour,
+  day: null,
+  month: null,
+  year: null,
+  startHour: null,
+  endHour: null,
   deleted: false,
 }
 const taskAr = []
@@ -77,7 +86,7 @@ async function postLoginHandler(request, response) {
     const userFound = await query.findOne()
     if (userFound) {
       request.session.user = request.body.username
-      response.send(`Hey there, welcome <a href=\'/logout'>click to logout</a>`)
+      response.redirect('/')
     } else {
       console.log('Invalid username or password')
       response.redirect('/login')
@@ -135,5 +144,5 @@ async function postSignUpHandler(request, response) {
 
 // Open server port
 app.listen(8000, () => {
-  console.log('server running...')
+  console.log('server running... port 8000')
 })

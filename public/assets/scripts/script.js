@@ -1,8 +1,11 @@
+//const { send } = require('process')
+
 const nextBtn = document.querySelector('.next-month-btn')
 const prevBtn = document.querySelector('.prev-month-btn')
 const monthNameEl = document.querySelector('.month-name')
 const calendarTableEl = document.querySelector('#calendar-table')
 const addTaskModalEl = document.querySelector('#AddTaskDialog')
+const addTaskBtnEl = document.querySelector('#addTaskBtn')
 
 class Calendar {
   constructor() {
@@ -97,6 +100,19 @@ function activateDialogHandler(e) {
   if (clickedEl.dataset.fulldate) addTaskModalEl.showModal()
 }
 
+async function submitTaskHandler(e) {
+  e.preventDefault()
+  const response = await fetch('/tasks', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ data: 'hola' }),
+  })
+  const data = await response.json()
+  console.log('fetch done: ', data.message)
+}
+
 // events
 window.addEventListener('load', () => {
   calendar.populateCalendar()
@@ -106,3 +122,4 @@ window.addEventListener('load', () => {
 nextBtn.addEventListener('click', nextMonthHandler)
 prevBtn.addEventListener('click', prevMonthHandler)
 calendarTableEl.addEventListener('click', activateDialogHandler)
+addTaskBtn.addEventListener('click', submitTaskHandler)

@@ -49,9 +49,13 @@ app
   .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
 
 app.route('/tasks').post((request, response) => {
-  console.log('task post')
-  console.log(request.body)
-  response.status(200).send({ status: 200, message: { data: 'recibido' } })
+  const { task, timeStart, duration, taskDate } = request.body
+  console.log(task, timeStart, duration, taskDate)
+  if (task && timeStart && duration > 0) {
+    response.status(200).redirect('/')
+  } else {
+    response.status(400).redirect('/')
+  }
 })
 app.route('/signup').get(getSignUpHandler).post(postSignUpHandler)
 app.route('/logout').get((request, response) => {

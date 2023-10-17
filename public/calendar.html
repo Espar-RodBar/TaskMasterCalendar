@@ -98,14 +98,44 @@
       </section>
     </main>
     <dialog id="AddTaskDialog">
-      <form method="dialog">
+      <header class="dialog-title"><p>Reserva de sala</p></header>
+      <button id="closeDialogBtn">X</button>
+      <form method="POST" action="/tasks">
         <fieldset class="vertical-flex">
           <legend>Añade titulo:</legend>
-          <label><input type="text" name="task" /> </label>
-          <label>Hora inicio:<input type="time" name="time-start" /> </label>
-          <label>Hora final:<input type="time" name="time-end" /> </label>
-          <button id="addTaskBtn">Añadir</button>
-          <button id="closeDialogBtn">X</button>
+          <label
+            ><input id="taskNameInput" type="text" name="task" required />
+          </label>
+          <label class="taskDatelbl"></label
+          ><input type="text" name="taskDate" class="taskDate" />
+          <label
+            >Hora inicio:<input
+              type="time"
+              min="07:00"
+              max="22:00"
+              name="timeStart"
+              required
+              id="taskTimeInput"
+            />
+          </label>
+          <label
+            >Duracion (1 / 2 / 3 ) horas<input
+              type="range"
+              name="duration"
+              list="values"
+              min="1"
+              max="3"
+              step="1"
+              id="taskDurationInput"
+              required
+            />
+          </label>
+          <datalist id="values">
+            <option value="1" label="1"></option>
+            <option value="2" label="2"></option>
+            <option value="3" label="3"></option>
+          </datalist>
+          <button type="submit" id="addTaskBtn">Añadir</button>
         </fieldset>
       </form>
     </dialog>

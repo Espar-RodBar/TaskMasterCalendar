@@ -5,7 +5,10 @@ const prevBtn = document.querySelector('.prev-month-btn')
 const monthNameEl = document.querySelector('.month-name')
 const calendarTableEl = document.querySelector('#calendar-table')
 const addTaskModalEl = document.querySelector('#AddTaskDialog')
-const addTaskBtnEl = document.querySelector('#addTaskBtn')
+// const addTaskBtnEl = document.querySelector('#addTaskBtn')
+const closeDialogBtnEl = document.querySelector('#closeDialogBtn')
+const taskDateEl = document.querySelector('.taskDate')
+const taskDateLblEl = document.querySelector('.taskDatelbl')
 
 class Calendar {
   constructor() {
@@ -63,6 +66,7 @@ class Calendar {
       this.monthNames[this.date.getMonth()]
     } ${this.date.getFullYear()}`
   }
+
   populateCalendar() {
     for (
       let cell = this.getStartingCell(), date = 1;
@@ -79,6 +83,13 @@ class Calendar {
 }
 
 const calendar = new Calendar()
+
+// helpers
+function clearFormInputs() {
+  document.querySelector('#taskDurationInput').value = '2'
+  document.querySelector('#taskTimeInput').value = ''
+  document.querySelector('#taskNameInput').value = ''
+}
 
 // handlers
 function nextMonthHandler() {
@@ -97,20 +108,14 @@ function prevMonthHandler() {
 
 function activateDialogHandler(e) {
   const clickedEl = e.target
-  if (clickedEl.dataset.fulldate) addTaskModalEl.showModal()
-}
-
-async function submitTaskHandler(e) {
-  e.preventDefault()
-  const response = await fetch('/tasks', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: 'hola' }),
-  })
-  const data = await response.json()
-  console.log('fetch done: ', data.message)
+  if (clickedEl.dataset.fulldate) {
+    taskDateLblEl.textContent = clickedEl.dataset.fulldate
+      .split('-')
+      .reverse()
+      .join(' ')
+    taskDateEl.value = clickedEl.dataset.fulldate
+    addTaskModalEl.showModal()
+  }
 }
 
 // events
@@ -119,7 +124,10 @@ window.addEventListener('load', () => {
   calendar.writeMonth(monthNameEl)
 })
 
+closeDialogBtnEl.addEventListener('click', (e) => {
+  clearFormInputs()
+  addTaskModalEl.close()
+})
 nextBtn.addEventListener('click', nextMonthHandler)
 prevBtn.addEventListener('click', prevMonthHandler)
 calendarTableEl.addEventListener('click', activateDialogHandler)
-addTaskBtn.addEventListener('click', submitTaskHandler)

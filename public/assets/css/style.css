@@ -82,11 +82,49 @@ form button:hover {
   padding: 3rem 2rem 2rem;
 }
 
+fieldset {
+  padding: 1rem;
+  border-radius: 5px;
+  border: 2px solid var(--main-blue-color);
+}
+
+.taskDate {
+  display: none;
+}
+
+.dialog-title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dialog-title p {
+  font-size: 1.4rem;
+}
+
 #closeDialogBtn {
   margin: 0;
   position: absolute;
   top: 2px;
   right: 2px;
+
+  background: linear-gradient(
+    to right,
+    var(--light-red-color),
+    var(--main-red-color)
+  );
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+#closeDialogBtn:hover {
+  background: linear-gradient(
+    to right,
+    var(--main-red-color),
+    var(--dark-red-color)
+  );
+  transform: scale(1.01);
 }
 
 #addTaskBtn {

@@ -3,6 +3,9 @@ const sessions = require('express-session')
 const connectDB = require('./config/database')
 const logger = require('morgan')
 const cors = require('cors')
+const ejs = require('ejs')
+const login = require('./controllers/login')
+const signup = require('./controllers/signup')
 
 require('dotenv').config()
 
@@ -29,6 +32,9 @@ app.use(logger('tiny'))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// adding ejs
+app.set('view engine', 'ejs')
 
 var auth = function (request, response, next) {
   if (request.session && request.session.user) {
@@ -58,12 +64,22 @@ function Task() {
 const taskAr = []
 
 // Routes
-app.route('/login').get(getLoginHandler).post(postLoginHandler)
+app.route('/login').get(login.getLogin).post(login.postLogin)
 app
   .route('/')
   .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
 
-app.route('/tasks').post(auth, (request, response) => {
+app.route('/tasks').post(auth, postTaskHandler)
+app.route('/signup').get(signup.getSignUp).post(signup.postSignUp)
+app.route('/logout').get((request, response) => {
+  request.session.destroy()
+  response.redirect('/')
+})
+
+//////////////////
+// TASKS POST
+
+function postTaskHandler(request, response) {
   const { task, timeStart, duration, taskDate } = request.body
   if (taskDate && task && timeStart && duration > 0) {
     const newTask = Task()
@@ -85,84 +101,10 @@ app.route('/tasks').post(auth, (request, response) => {
   } else {
     response.status(400).redirect('/')
   }
-})
-app.route('/signup').get(getSignUpHandler).post(postSignUpHandler)
-app.route('/logout').get((request, response) => {
-  request.session.destroy()
-  response.redirect('/')
-})
-
-//////////////////
-// login
-const User = require('./models/user')
-
-async function postLoginHandler(request, response) {
-  const { username, password } = request.body
-
-  const query = User.where({ userName: username, password: password })
-
-  try {
-    const userFound = await query.findOne()
-
-    if (userFound) {
-      request.session.user = userFound.userName
-      request.session.userid = userFound.id
-      console.log(request.session)
-      response.redirect('/')
-    } else {
-      console.log('Invalid username or password')
-      response.redirect('/login')
-    }
-  } catch (err) {
-    console.log('error on post login: ', err)
-    response.send('error')
-  }
-}
-
-function getLoginHandler(request, response) {
-  console.log('get login', request.session)
-  // session = request.session
-  if (request.session.userid) {
-    response.redirect('/content')
-  } else response.sendFile(__dirname + '/views/login.html')
 }
 
 ///////////////////
 // Signup
-//const User = require('./models/user')
-const validator = require('validator')
-
-function getSignUpHandler(request, response) {
-  response.sendFile(__dirname + '/views/signup.html')
-}
-async function postSignUpHandler(request, response) {
-  const { name, username, password } = request.body
-  // check if the fields are not empty and the password is correct
-  if (username && name && password[0] && password[0] === password[1]) {
-    // check if the user exist
-    const userFound = await User.findOne({ userName: username }).exec()
-
-    if (userFound) {
-      console.log('existing user')
-      return response.redirect('/signup')
-    }
-    const dbUser = new User({
-      name: name,
-      userName: username,
-      password: password[0],
-    })
-    try {
-      await dbUser.save()
-      response.redirect('/login')
-    } catch (err) {
-      console.log('Error saving user')
-      response.redirect('/signup')
-    }
-  } else {
-    console.log('bad input values')
-    response.redirect('/signup')
-  }
-}
 
 // Open server port
 app.listen(8000, () => {

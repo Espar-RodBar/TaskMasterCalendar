@@ -39,19 +39,48 @@ var auth = function (request, response, next) {
 //serving public file
 app.use(express.static('public'))
 
-// a variable to save a session
-let session
+///////////////
+// Task Data
+function Task() {
+  return {
+    title: '',
+    user: 0,
+    day: null,
+    month: null,
+    year: null,
+    startHour: null,
+    startMinutes: null,
+    endMinutes: null,
+    endHour: null,
+    deleted: false,
+  }
+}
+const taskAr = []
 
 // Routes
-app.route('/login').get(getLoginHnadler).post(postLoginHandler)
+app.route('/login').get(getLoginHandler).post(postLoginHandler)
 app
   .route('/')
   .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
 
-app.route('/tasks').post((request, response) => {
+app.route('/tasks').post(auth, (request, response) => {
   const { task, timeStart, duration, taskDate } = request.body
-  console.log(task, timeStart, duration, taskDate)
-  if (task && timeStart && duration > 0) {
+  if (taskDate && task && timeStart && duration > 0) {
+    const newTask = Task()
+    const [year, month, day] = taskDate.split('-')
+    const [hour, minutes] = timeStart.split(':')
+    newTask.day = day
+    newTask.month = month
+    newTask.year = year
+    newTask.startHour = hour
+    newTask.startMinutes = minutes
+    newTask.endHour = hour + duration
+    newTask.endMinutes = minutes
+    newTask.title = task
+    newTask.user = request.session.userid
+
+    taskAr.push(newTask)
+    console.log(taskAr)
     response.status(200).redirect('/')
   } else {
     response.status(400).redirect('/')
@@ -62,20 +91,6 @@ app.route('/logout').get((request, response) => {
   request.session.destroy()
   response.redirect('/')
 })
-
-///////////////
-// Task Data
-const task = {
-  title: '',
-  user: 0,
-  day: null,
-  month: null,
-  year: null,
-  startHour: null,
-  endHour: null,
-  deleted: false,
-}
-const taskAr = []
 
 //////////////////
 // login
@@ -88,8 +103,11 @@ async function postLoginHandler(request, response) {
 
   try {
     const userFound = await query.findOne()
+
     if (userFound) {
-      request.session.user = request.body.username
+      request.session.user = userFound.userName
+      request.session.userid = userFound.id
+      console.log(request.session)
       response.redirect('/')
     } else {
       console.log('Invalid username or password')
@@ -101,10 +119,10 @@ async function postLoginHandler(request, response) {
   }
 }
 
-function getLoginHnadler(request, response) {
-  // console.log('get login', request.session)
-  session = request.session
-  if (session.userid) {
+function getLoginHandler(request, response) {
+  console.log('get login', request.session)
+  // session = request.session
+  if (request.session.userid) {
     response.redirect('/content')
   } else response.sendFile(__dirname + '/views/login.html')
 }

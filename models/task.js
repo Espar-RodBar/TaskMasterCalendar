@@ -8,6 +8,8 @@ const taskSchema = new Schema({
   month: { type: number, required: true },
   year: { type: number, required: true },
   startHour: { type: number, required: true },
+  startMinutes: { type: number, required: true },
+  endMinutes: { type: number, required: true },
   endHour: { type: number, required: true },
   deleted: { type: Boolean, default: false },
 })

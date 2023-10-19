@@ -78,6 +78,27 @@ app.route('/logout').get((request, response) => {
 
 //////////////////
 // TASKS POST
+function addTaskBD(task, date, start, duration, userId) {
+  const newTask = Task()
+  const [year, month, day] = date.split('-')
+  const [hour, minutes] = start.split(':')
+  newTask.day = day
+  newTask.month = month
+  newTask.year = year
+  newTask.startHour = Number(hour)
+  newTask.startMinutes = Number(minutes)
+  newTask.endHour = Number(hour) + Number(duration)
+  newTask.endMinutes = Number(minutes)
+  newTask.title = task
+  newTask.user = userId
+
+  taskAr.push(newTask)
+}
+
+addTaskBD('sala polivalent', '2023-10-19', '15:30', 2, 'id111')
+addTaskBD('sala televisio', '2023-10-19', '15:30', 1, 'id111')
+addTaskBD('sala ordinadors', '2023-10-19', '15:30', 3, 'id111')
+console.log(taskAr)
 
 function postTaskHandler(request, response) {
   const { task, timeStart, duration, taskDate } = request.body
@@ -102,9 +123,6 @@ function postTaskHandler(request, response) {
     response.status(400).redirect('/')
   }
 }
-
-///////////////////
-// Signup
 
 // Open server port
 app.listen(8000, () => {

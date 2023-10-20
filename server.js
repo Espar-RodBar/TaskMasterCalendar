@@ -67,7 +67,8 @@ const taskAr = []
 app.route('/login').get(login.getLogin).post(login.postLogin)
 app
   .route('/')
-  .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
+  .get(auth, (req, res) => res.render('calendar.ejs', { tasks: taskAr }))
+// .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
 
 app.route('/tasks').post(auth, postTaskHandler)
 app.route('/signup').get(signup.getSignUp).post(signup.postSignUp)

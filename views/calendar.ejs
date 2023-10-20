@@ -9,7 +9,7 @@
     <title>Calendar</title>
   </head>
   <body>
-    <header></header>
+    <header>CaLeNdAr EJS</header>
     <main>
       <section>
         <header></header>
@@ -92,36 +92,24 @@
       <section>
         <header></header>
         <ul>
+          <% for(let i = 0; i < tasks.length; i++) { %>
           <li>
             <div class="day-event vertical-flex">
               <header>
-                <h3 class="event-title">titulo</h3>
-                por <span>usuario</span>
+                <h3 class="event-title"><%= tasks[i].title %></h3>
+                por <span><%= tasks[i].user %></span>
               </header>
-              <p>Horario:<span>3:45</span>/<span>4:45</span></p>
+              <p>
+                Horario:<span
+                  ><%= tasks[i].startHour %>:<%= tasks[i].startMinutes %></span
+                >/<span
+                  ><%= tasks[i].endHour %>:<%= tasks[i].endMinutes %></span
+                >
+              </p>
               <p>Eliminar</p>
             </div>
           </li>
-          <li>
-            <div class="day-event vertical-flex">
-              <header>
-                <h3 class="event-title">titulo</h3>
-                por <span>usuario</span>
-              </header>
-              <p>Horario:<span>3:45</span>/<span>4:45</span></p>
-              <p>Eliminar</p>
-            </div>
-          </li>
-          <li>
-            <div class="day-event vertical-flex">
-              <header>
-                <h3 class="event-title">titulo</h3>
-                por <span>usuario</span>
-              </header>
-              <p>Horario:<span>3:45</span>/<span>4:45</span></p>
-              <p>Eliminar</p>
-            </div>
-          </li>
+          <% } %>
         </ul>
       </section>
     </main>

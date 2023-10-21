@@ -46,20 +46,20 @@ app.use(express.static('public'))
 
 ///////////////
 // Task Data
-function Task() {
-  return {
-    taskName: '',
-    user: 0,
-    day: null,
-    month: null,
-    year: null,
-    startHour: null,
-    startMinutes: null,
-    endMinutes: null,
-    endHour: null,
-    deleted: false,
-  }
-}
+// function Task() {
+//   return {
+//     taskName: '',
+//     userId: 0,
+//     day: null,
+//     month: null,
+//     year: null,
+//     startHour: null,
+//     startMinutes: null,
+//     endMinutes: null,
+//     endHour: null,
+//     deleted: false,
+//   }
+// }
 const taskAr = []
 
 // Routes
@@ -80,49 +80,34 @@ app.route('/logout').get((request, response) => {
 
 //////////////////
 // TASKS POST
-function addTaskBD(task, date, start, duration, userId) {
-  const newTask = Task()
-  const [year, month, day] = date.split('-')
-  const [hour, minutes] = start.split(':')
-  newTask.day = day
-  newTask.month = month
-  newTask.year = year
-  newTask.startHour = Number(hour)
-  newTask.startMinutes = Number(minutes)
-  newTask.endHour = Number(hour) + Number(duration)
-  newTask.endMinutes = Number(minutes)
-  newTask.taskName = task
-  newTask.user = userId
-  newTask.id = 1111
-  newTask.userName = 'hola'
-  taskAr.push(newTask)
-}
 
-addTaskBD('sala polivalent', '2023-10-19', '15:30', 2, 'id111')
-addTaskBD('sala televisio', '2023-10-19', '15:30', 1, 'id111')
-addTaskBD('sala ordinadors', '2023-10-19', '15:30', 3, 'id111')
-console.log(taskAr)
+const Task = require('./models/task')
 
-function postTaskHandler(request, response) {
+async function postTaskHandler(request, response) {
   console.log('tasks post:', request.body)
   const { taskName, timeStart, duration, taskDate } = request.body
   if (taskDate && taskName && timeStart && duration > 0) {
-    const newTask = Task()
     const [year, month, day] = taskDate.split('-')
     const [hour, minutes] = timeStart.split(':')
-    newTask.day = day
-    newTask.month = month
-    newTask.year = year
-    newTask.startHour = hour
-    newTask.startMinutes = minutes
-    newTask.endHour = hour + duration
-    newTask.endMinutes = minutes
-    newTask.taskName = taskName
-    newTask.user = request.session.userid
+    const newTask = new Task({
+      day: day,
+      month: month,
+      year: year,
+      startHour: Number(hour).toString().padStart(2, '0'),
+      startMinutes: minutes,
+      endHour: (Number(hour) + Number(duration)).toString().padStart(2, '0'),
+      endMinutes: minutes,
+      taskName: taskName,
+      userId: request.session.userid,
+    })
 
-    taskAr.push(newTask)
-    console.log(taskAr)
-    response.status(200).redirect('/')
+    try {
+      newTask.save()
+      response.status(200).redirect('/')
+    } catch (err) {
+      response.status(500)
+      console.log('error crating task in db')
+    }
   } else {
     response.status(400).redirect('/')
   }

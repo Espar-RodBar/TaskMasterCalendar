@@ -3,14 +3,14 @@ const Schema = mongoose.Schema
 
 const taskSchema = new Schema({
   taskName: { type: String, required: true },
-  user: { type: number, required: false },
-  day: { type: number, required: true },
-  month: { type: number, required: true },
-  year: { type: number, required: true },
-  startHour: { type: number, required: true },
-  startMinutes: { type: number, required: true },
-  endMinutes: { type: number, required: true },
-  endHour: { type: number, required: true },
+  userId: { type: String, required: false },
+  day: { type: Number, required: true },
+  month: { type: Number, required: true },
+  year: { type: Number, required: true },
+  startHour: { type: Number, required: true },
+  startMinutes: { type: Number, required: true },
+  endMinutes: { type: Number, required: true },
+  endHour: { type: Number, required: true },
   deleted: { type: Boolean, default: false },
 })
 

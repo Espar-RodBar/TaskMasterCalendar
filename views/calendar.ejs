@@ -96,7 +96,7 @@
           <li>
             <div class="day-event vertical-flex">
               <header>
-                <h3 class="event-title"><%= tasks[i].title %></h3>
+                <h3 class="event-title"><%= tasks[i].taskName %></h3>
                 por <span><%= tasks[i].user %></span>
               </header>
               <p>
@@ -120,7 +120,7 @@
         <fieldset class="vertical-flex">
           <legend>Añade titulo:</legend>
           <label
-            ><input id="taskNameInput" type="text" name="task" required />
+            ><input id="taskNameInput" type="text" name="taskName" required />
           </label>
           <label class="taskDatelbl"></label
           ><input type="text" name="taskDate" class="taskDate" />

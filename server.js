@@ -4,8 +4,7 @@ const connectDB = require('./config/database')
 const logger = require('morgan')
 const cors = require('cors')
 const ejs = require('ejs')
-const login = require('./controllers/login')
-const signup = require('./controllers/signup')
+const authController = require('./controllers/auth')
 
 require('dotenv').config()
 
@@ -49,7 +48,7 @@ app.use(express.static('public'))
 // Task Data
 function Task() {
   return {
-    title: '',
+    taskName: '',
     user: 0,
     day: null,
     month: null,
@@ -64,14 +63,16 @@ function Task() {
 const taskAr = []
 
 // Routes
-app.route('/login').get(login.getLogin).post(login.postLogin)
+app.route('/login').get(authController.getLogin).post(authController.postLogin)
 app
   .route('/')
   .get(auth, (req, res) => res.render('calendar.ejs', { tasks: taskAr }))
-// .get(auth, (req, res) => res.sendFile(__dirname + '/public/calendar.html'))
 
 app.route('/tasks').post(auth, postTaskHandler)
-app.route('/signup').get(signup.getSignUp).post(signup.postSignUp)
+app
+  .route('/signup')
+  .get(authController.getSignUp)
+  .post(authController.postSignUp)
 app.route('/logout').get((request, response) => {
   request.session.destroy()
   response.redirect('/')
@@ -90,9 +91,10 @@ function addTaskBD(task, date, start, duration, userId) {
   newTask.startMinutes = Number(minutes)
   newTask.endHour = Number(hour) + Number(duration)
   newTask.endMinutes = Number(minutes)
-  newTask.title = task
+  newTask.taskName = task
   newTask.user = userId
-
+  newTask.id = 1111
+  newTask.userName = 'hola'
   taskAr.push(newTask)
 }
 
@@ -102,8 +104,9 @@ addTaskBD('sala ordinadors', '2023-10-19', '15:30', 3, 'id111')
 console.log(taskAr)
 
 function postTaskHandler(request, response) {
-  const { task, timeStart, duration, taskDate } = request.body
-  if (taskDate && task && timeStart && duration > 0) {
+  console.log('tasks post:', request.body)
+  const { taskName, timeStart, duration, taskDate } = request.body
+  if (taskDate && taskName && timeStart && duration > 0) {
     const newTask = Task()
     const [year, month, day] = taskDate.split('-')
     const [hour, minutes] = timeStart.split(':')
@@ -114,7 +117,7 @@ function postTaskHandler(request, response) {
     newTask.startMinutes = minutes
     newTask.endHour = hour + duration
     newTask.endMinutes = minutes
-    newTask.title = task
+    newTask.taskName = taskName
     newTask.user = request.session.userid
 
     taskAr.push(newTask)

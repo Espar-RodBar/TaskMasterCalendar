@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./assets/scripts/script.js" defer></script>
-    <link rel="stylesheet" href="./assets/css/reset.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script src="/assets/scripts/script.js" defer></script>
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <title>Calendar</title>
   </head>
   <body>
@@ -16,7 +16,7 @@
 
         <div class="wrapper">
           <div class="calendar horizontal-flex">
-            <div class="prev-month-btn">◀︎</div>
+            <div class="prev-month-btn"><a href="">◀︎</a></div>
             <table id="calendar-table">
               <caption>
                 <span class="month-name">Month</span>
@@ -85,7 +85,7 @@
                 <td id="cel42"></td>
               </tr>
             </table>
-            <div class="next-month-btn">►</div>
+            <div class="next-month-btn"><a href="">►</a></div>
           </div>
         </div>
       </section>
@@ -170,6 +170,8 @@
         </fieldset>
       </form>
     </dialog>
-    <footer></footer>
+    <footer>
+      <a href="/logout">logout</a>
+    </footer>
   </body>
 </html>

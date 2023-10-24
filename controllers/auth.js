@@ -26,7 +26,6 @@ exports.postLogin = async (request, response) => {
 
 exports.getLogin = (request, response) => {
   console.log('get login', request.session)
-  // session = request.session
   if (request.session.userid) {
     response.redirect('/')
   } else response.render('login.ejs')

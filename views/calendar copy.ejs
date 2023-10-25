@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="/assets/scripts/script.js" defer></script>
+    <script src="/assets/scripts/script.js" defer></script>
     <link rel="stylesheet" href="/assets/css/reset.css" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <title>Calendar</title>
@@ -91,7 +91,26 @@
       </section>
       <section>
         <header>TASKS</header>
-        <ul></ul>
+        <ul>
+          <!-- <% for(let i = 0; i < tasks.length; i++) { %>
+          <li>
+            <div class="day-event vertical-flex">
+              <header>
+                <h3 class="event-title"><%= tasks[i].taskName %></h3>
+                por <span><%= tasks[i].user %></span>
+              </header>
+              <p>
+                Horario:<span
+                  ><%= tasks[i].startHour %>:<%= tasks[i].startMinutes %></span
+                >/<span
+                  ><%= tasks[i].endHour %>:<%= tasks[i].endMinutes %></span
+                >
+              </p>
+              <p>Eliminar</p>
+            </div>
+          </li>
+          <% } %> -->
+        </ul>
       </section>
     </main>
     <dialog id="AddTaskDialog">

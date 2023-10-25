@@ -1,3 +1,5 @@
+import { Calendar } from './Calendar.js'
+
 const monthNameEl = document.querySelector('.month-name')
 const calendarTableEl = document.querySelector('#calendar-table')
 const addTaskModalEl = document.querySelector('#AddTaskDialog')
@@ -12,92 +14,28 @@ const parameters = window.location.pathname.split('/')
 const endpoint = parameters[1]
 const year = parameters[2]
 // month from 1 -> 12, to 0 -> 11 scale
-const month = parameters[3] - 1
+const month = (Number(parameters[3]) - 1).toString()
 const day = parameters[4]
 const url = `/${endpoint}/`
 const todayDate = new Date()
 
-class Calendar {
-  constructor(year, month) {
-    this.date = new Date(year, month)
-    this.todayDateStrdateStr = `${todayDate.getFullYear()}-${todayDate.getMonth()}-${todayDate.getDate()}`
-    this.monthNames = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Setiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ]
-  }
-
-  getStartingCell(
-    year = this.date.getFullYear(),
-    month = this.date.getMonth()
-  ) {
-    return new Date(year, month, 1).getDay() || 7
-  }
-
-  getEndMonthLastDate(
-    year = this.date.getFullYear(),
-    month = this.date.getMonth()
-  ) {
-    return new Date(year, month + 1, 0).getDate()
-  }
-
-  getNextMonthStr() {
-    const nextDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1)
-    console.log('nextDate:', nextDate)
-    return `${nextDate.getFullYear()}/${nextDate.getMonth() + 1}`
-  }
-
-  getPrevMonthStr() {
-    const prevDate = new Date(this.date.getFullYear(), this.date.getMonth())
-    console.log('prevDate:', prevDate)
-    return `${prevDate.getFullYear()}/${prevDate.getMonth()}`
-  }
-
-  clearCellsCalendar() {
-    for (let cell = 1; cell <= 42; cell++) {
-      const cellEl = document.getElementById(`cel${cell}`)
-      cellEl.textContent = ''
-      cellEl.dataset.fulldate = ''
-      cellEl.classList.remove('today')
-    }
-  }
-
-  writeMonth(htmlEl) {
-    htmlEl.textContent = `${
-      this.monthNames[this.date.getMonth()]
-    } ${this.date.getFullYear()}`
-  }
-
-  populateCalendar() {
-    for (
-      let cell = this.getStartingCell(), date = 1;
-      date <= this.getEndMonthLastDate();
-      date++, cell++
-    ) {
-      const cellEl = document.getElementById(`cel${cell}`)
-      cellEl.textContent = date
-      const fulldateStr = `${this.date.getFullYear()}-${this.date.getMonth()}-${date}`
-
-      if (fulldateStr === this.todayDateStrdateStr)
-        cellEl.classList.add('today')
-      cellEl.dataset.fulldate = fulldateStr
-    }
-  }
-}
-
 const calendar = new Calendar(year, month)
 
 // helpers
+async function fetchTasks(url) {
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-type': 'application/json' },
+    })
+    const data = await response.json()
+    const dataObj = JSON.parse(data.body)
+    return dataObj
+  } catch (err) {
+    console.log('error getting tasks:', err)
+    return
+  }
+}
 function clearFormInputs() {
   document.querySelector('#taskDurationInput').value = '2'
   document.querySelector('#taskTimeInput').value = ''
@@ -129,8 +67,9 @@ function activateDialogHandler(e) {
 }
 
 // events
-window.addEventListener('load', () => {
-  calendar.populateCalendar()
+window.addEventListener('load', async () => {
+  const tasks = await fetchTasks(`/tasks/${year}/${month}`)
+  calendar.populateCalendar(tasks)
   calendar.writeMonth(monthNameEl)
   nextMonthBtn.setAttribute('href', addNextMonthLink())
   prevMonthBtn.setAttribute('href', addPrevMonthLink())

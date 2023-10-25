@@ -48,8 +48,9 @@ app.use(express.static('public'))
 app.route('/login').get(authController.getLogin).post(authController.postLogin)
 app.route('/').get(auth, getTasksHandler)
 
-app.route('/dates/:year/:month/:day?').get(auth, getMonthTasksHandler)
-app.route('/tasks').post(auth, postTaskDayHandler)
+app.route('/dates/:year/:month/:day?').get(auth, getDate)
+app.route('/tasks/:year/:month').get(auth, getTasksMonthHandler)
+app.route('/tasks').get(auth, getTaskDayHandler).post(auth, postTaskDayHandler)
 app
   .route('/signup')
   .get(authController.getSignUp)
@@ -60,8 +61,15 @@ app.route('/logout').get((request, response) => {
 })
 
 ////////////////////
-//
-
+// DATE GET
+async function getDate(request, response) {
+  try {
+    response.render('calendar.ejs')
+  } catch (err) {
+    console.log('error getting Date')
+    response.status(500)
+  }
+}
 /////////////
 // TASKS GET
 async function getTasksHandler(request, response) {
@@ -73,15 +81,14 @@ async function getTasksHandler(request, response) {
   console.log('getTaskHandler:', today, day, month, year)
   response.status(200).redirect(`/dates/${year}/${month}`)
 }
+async function getTaskDayHandler(request, response) {}
 
-async function getMonthTasksHandler(request, response) {
-  console.log('get tasks parameters in get', request.params)
+async function getTasksMonthHandler(request, response) {
   const { year, month } = request.params
   try {
     const tasksToday = await Task.find({ month, year })
     console.log(tasksToday)
-    response.render('calendar.ejs')
-    // response.render('calendar.ejs', { tasks: tasksToday })
+    response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
     response.status(500)
@@ -117,7 +124,7 @@ async function postTaskDayHandler(request, response) {
       response.status(200).redirect(`/dates/${year}/${month}`)
     } catch (err) {
       response.status(500)
-      console.log('error crating task in db')
+      console.log('error creating task in db')
     }
   } else {
     response.status(400).redirect('/')

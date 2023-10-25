@@ -48,8 +48,8 @@ app.use(express.static('public'))
 app.route('/login').get(authController.getLogin).post(authController.postLogin)
 app.route('/').get(auth, getTasksHandler)
 
-app.route('/dates/:year/:month/:day?').get(auth, getTasksDayHandler)
-app.route('/tasks').post(auth, postTaskHandler)
+app.route('/dates/:year/:month/:day?').get(auth, getMonthTasksHandler)
+app.route('/tasks').post(auth, postTaskDayHandler)
 app
   .route('/signup')
   .get(authController.getSignUp)
@@ -59,25 +59,29 @@ app.route('/logout').get((request, response) => {
   response.redirect('/')
 })
 
+////////////////////
+//
+
 /////////////
 // TASKS GET
 async function getTasksHandler(request, response) {
   const today = new Date()
   const day = today.getDate()
-  // Date counts month from 0 -> 11. So add +1 for the url 1 -> 12
+  // Date counts month from 0 -> 11. So  +1 to convert to  1 -> 12
   const month = today.getMonth() + 1
   const year = today.getFullYear()
   console.log('getTaskHandler:', today, day, month, year)
-  response.status(200).redirect(`/dates/${year}/${month}/${day}`)
+  response.status(200).redirect(`/dates/${year}/${month}`)
 }
 
-async function getTasksDayHandler(request, response) {
+async function getMonthTasksHandler(request, response) {
   console.log('get tasks parameters in get', request.params)
   const { year, month } = request.params
   try {
     const tasksToday = await Task.find({ month, year })
     console.log(tasksToday)
-    response.render('calendar.ejs', { tasks: tasksToday })
+    response.render('calendar.ejs')
+    // response.render('calendar.ejs', { tasks: tasksToday })
   } catch (err) {
     console.log('error getting tasks')
     response.status(500)
@@ -89,7 +93,7 @@ async function getTasksDayHandler(request, response) {
 
 const Task = require('./models/task')
 
-async function postTaskHandler(request, response) {
+async function postTaskDayHandler(request, response) {
   const { taskName, timeStart, duration, taskDate } = request.body
   if (taskDate && taskName && timeStart && duration > 0) {
     let [year, month, day] = taskDate.split('-')

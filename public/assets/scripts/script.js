@@ -17,6 +17,19 @@ const day = parameters[4]
 const url = `/${endpoint}/`
 const todayDate = new Date()
 
+const taskComponentHTML = `<li>
+            <div class="day-event vertical-flex">
+              <header>
+                <h3 class="event-title">{%title%}</h3>
+                por <span>{%user%}</span>
+              </header>
+              <p>
+                Horario:<span>{%start%}</span>/<span>{%end%}</span>
+              </p>
+              <p>Eliminar</p>
+            </div>
+          </li>`
+
 class Calendar {
   constructor(year, month) {
     this.date = new Date(year, month)
@@ -53,13 +66,11 @@ class Calendar {
 
   getNextMonthStr() {
     const nextDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1)
-    console.log('nextDate:', nextDate)
     return `${nextDate.getFullYear()}/${nextDate.getMonth() + 1}`
   }
 
   getPrevMonthStr() {
     const prevDate = new Date(this.date.getFullYear(), this.date.getMonth())
-    console.log('prevDate:', prevDate)
     return `${prevDate.getFullYear()}/${prevDate.getMonth()}`
   }
 

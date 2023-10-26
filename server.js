@@ -49,7 +49,7 @@ app.route('/login').get(authController.getLogin).post(authController.postLogin)
 app.route('/').get(auth, getTasksHandler)
 
 app.route('/dates/:year/:month/:day?').get(auth, getDate)
-app.route('/tasks/:year/:month').get(auth, getTasksMonthHandler)
+app.route('/tasks/:year/:month/:day?').get(auth, getTasksMonthHandler)
 app.route('/tasks').get(auth, getTaskDayHandler).post(auth, postTaskDayHandler)
 app
   .route('/signup')
@@ -84,9 +84,11 @@ async function getTasksHandler(request, response) {
 async function getTaskDayHandler(request, response) {}
 
 async function getTasksMonthHandler(request, response) {
-  const { year, month } = request.params
+  const { year, month, day } = request.params
   try {
-    const tasksToday = await Task.find({ month, year })
+    const tasksToday = day
+      ? await Task.find({ month, year, day })
+      : await Task.find({ month, year })
     console.log(tasksToday)
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {

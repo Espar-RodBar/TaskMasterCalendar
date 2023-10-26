@@ -86,16 +86,17 @@ form button:hover {
   top: 5px;
   right: 5px;
 }
-.day-event {
+.day-events {
   background: lightblue;
   width: 20rem;
-  height: 10rem;
+  min-height: 10rem;
   align-items: center;
 
   padding: 1rem;
 }
 .day-event > * {
   display: inline-block;
+  background-color: rgb(117, 174, 192);
 }
 
 /* dialog */

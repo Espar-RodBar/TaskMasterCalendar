@@ -14,13 +14,13 @@ const nextMonthBtn = document.querySelector('.next-month-btn  a')
 const parameters = window.location.pathname.split('/')
 const endpoint = parameters[1]
 const year = parameters[2]
-// month from 1 -> 12, to 0 -> 11 scale
-const month = (Number(parameters[3]) - 1).toString()
+const month = Number(parameters[3]).toString()
 const url = `/${endpoint}/`
 
 let tasksState = null
 
-const calendar = new Calendar(year, month)
+// month from 1 -> 12, to 0 -> 11 scale
+const calendar = new Calendar(year, month - 1)
 
 // helpers
 async function fetchTasks(url) {
@@ -61,13 +61,21 @@ function renderTasks(parentUlEl, tasksAr) {
             <div class="day-task vertical-flex">
               <header>
                 <h3 class="event-title">${tasks.taskName}</h3>
-                por <span>${tasks.userId}</span>
+                por <span>${tasks.userName}</span>
               </header>
               <p>
                 Horario:<span
-                  >${tasks.startHour}:<%= ${tasks.startMinutes}</span
+                  >${tasks.startHour
+                    .toString()
+                    .padStart(2, '0')}:${tasks.startMinutes
+      .toString()
+      .padStart(2, '0')}</span
                 >/<span
-                  >${tasks.endHour}:${tasks.endMinutes}</span
+                  >${tasks.endHour
+                    .toString()
+                    .padStart(2, '0')}:${tasks.endMinutes
+      .toString()
+      .padStart(2, '0')}</span
                 >
               </p>
               <p>Eliminar</p>
@@ -83,8 +91,8 @@ async function activateDialogHandler(e) {
   if (clickedEl.dataset.fulldate) {
     taskDateEl.value = clickedEl.dataset.fulldate
     const [year, month, day] = clickedEl.dataset.fulldate.split('-')
-    taskDateLblEl.textContent = `${day}/${month}/${year}`
-    const tasks = await fetchTasks(`/tasks/${year}/${month}/${day}`)
+    taskDateLblEl.textContent = `${day}/${Number(month) + 1}/${year}`
+    const tasks = await fetchTasks(`/tasks/${year}/${Number(month) + 1}/${day}`)
     console.log(tasks)
     renderTasks(tasksListEl, tasks)
     addTaskModalEl.showModal()

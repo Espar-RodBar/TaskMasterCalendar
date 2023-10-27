@@ -12,7 +12,6 @@ exports.postLogin = async (request, response) => {
     if (userFound) {
       request.session.user = userFound.userName
       request.session.userid = userFound.id
-      console.log(request.session)
       response.redirect('/')
     } else {
       console.log('Invalid username or password')
@@ -25,7 +24,6 @@ exports.postLogin = async (request, response) => {
 }
 
 exports.getLogin = (request, response) => {
-  console.log('get login', request.session)
   if (request.session.userid) {
     response.redirect('/')
   } else response.render('login.ejs')
@@ -43,7 +41,6 @@ exports.postSignUp = async (request, response) => {
     const userFound = await User.findOne({ userName: username }).exec()
 
     if (userFound) {
-      console.log('existing user')
       return response.redirect('/signup')
     }
     const dbUser = new User({

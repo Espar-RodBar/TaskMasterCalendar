@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const taskSchema = new Schema({
   taskName: { type: String, required: true },
+  userName: { type: String, required: false },
   userId: { type: String, required: false },
   day: { type: Number, required: true },
   month: { type: Number, required: true },

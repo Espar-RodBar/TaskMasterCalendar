@@ -49,7 +49,8 @@ app.route('/login').get(authController.getLogin).post(authController.postLogin)
 app.route('/').get(auth, getTasksHandler)
 
 app.route('/dates/:year/:month/:day?').get(auth, getDate)
-app.route('/tasks/:year/:month/:day?').get(auth, getTasksMonthHandler)
+app.route('/tasks/:year/:month').get(auth, getTasksMonthHandler)
+app.route('/tasks/:year/:month/:day').get(auth, getTaskDayHandler)
 app.route('/tasks').get(auth, getTaskDayHandler).post(auth, postTaskDayHandler)
 app
   .route('/signup')
@@ -72,24 +73,32 @@ async function getDate(request, response) {
 }
 /////////////
 // TASKS GET
+
+const Task = require('./models/task')
+
 async function getTasksHandler(request, response) {
   const today = new Date()
-  const day = today.getDate()
   // Date counts month from 0 -> 11. So  +1 to convert to  1 -> 12
   const month = today.getMonth() + 1
   const year = today.getFullYear()
-  console.log('getTaskHandler:', today, day, month, year)
   response.status(200).redirect(`/dates/${year}/${month}`)
 }
-async function getTaskDayHandler(request, response) {}
 
-async function getTasksMonthHandler(request, response) {
+async function getTaskDayHandler(request, response) {
   const { year, month, day } = request.params
   try {
-    const tasksToday = day
-      ? await Task.find({ month, year, day })
-      : await Task.find({ month, year })
-    console.log(tasksToday)
+    const tasksToday = await Task.find({ month, year, day })
+    response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
+  } catch (err) {
+    console.log('error getting tasks')
+    response.status(500)
+  }
+}
+
+async function getTasksMonthHandler(request, response) {
+  const { year, month } = request.params
+  try {
+    const tasksToday = await Task.find({ month, year })
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
@@ -99,8 +108,6 @@ async function getTasksMonthHandler(request, response) {
 
 //////////////////
 // TASKS POST
-
-const Task = require('./models/task')
 
 async function postTaskDayHandler(request, response) {
   const { taskName, timeStart, duration, taskDate } = request.body
@@ -112,17 +119,17 @@ async function postTaskDayHandler(request, response) {
       day: day,
       month: month,
       year: year,
-      startHour: Number(hour).toString().padStart(2, '0'),
+      startHour: Number(hour),
       startMinutes: minutes,
-      endHour: (Number(hour) + Number(duration)).toString().padStart(2, '0'),
+      endHour: Number(hour) + Number(duration),
       endMinutes: minutes,
       taskName: taskName.trim(),
       userId: request.session.userid,
+      userName: request.session.user,
     })
 
     try {
       newTask.save()
-      console.log(year, month)
       response.status(200).redirect(`/dates/${year}/${month}`)
     } catch (err) {
       response.status(500)

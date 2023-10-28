@@ -1,6 +1,12 @@
 const User = require('../models/user')
 const validator = require('validator')
 
+exports.auth = function (request, response, next) {
+  if (request.session && request.session.user) {
+    return next()
+  } else response.redirect('/login')
+}
+
 exports.postLogin = async (request, response) => {
   const { username, password } = request.body
 
@@ -59,4 +65,9 @@ exports.postSignUp = async (request, response) => {
     console.log('bad input values')
     response.redirect('/signup')
   }
+}
+
+exports.logout = (request, response) => {
+  request.session.destroy()
+  response.redirect('/')
 }

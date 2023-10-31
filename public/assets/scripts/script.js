@@ -43,12 +43,14 @@ async function deleteTask() {
   const url = '/tasks/' + id
   try {
     const response = await fetch(url, {
-      method: 'patch',
+      method: 'put',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({ data: 'id number: ' + id }),
     })
-    console.log('deleted...')
-    // localStorage.reload()
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    location.reload()
     return
   } catch (err) {
     console.log('error deleting task:', err)

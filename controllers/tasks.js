@@ -1,3 +1,4 @@
+const task = require('../models/task')
 const Task = require('../models/task')
 
 exports.getTasks = async function (request, response) {
@@ -10,8 +11,9 @@ exports.getTasks = async function (request, response) {
 
 exports.getTaskDay = async function (request, response) {
   const { year, month, day } = request.params
+  const deleted = false
   try {
-    const tasksToday = await Task.find({ month, year, day })
+    const tasksToday = await Task.find({ month, year, day, deleted })
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
@@ -21,8 +23,9 @@ exports.getTaskDay = async function (request, response) {
 
 exports.getTasksMonth = async function (request, response) {
   const { year, month } = request.params
+  const deleted = false
   try {
-    const tasksToday = await Task.find({ month, year })
+    const tasksToday = await Task.find({ month, year, deleted })
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
@@ -58,5 +61,23 @@ exports.postTaskDay = async function (request, response) {
     }
   } else {
     response.status(400).redirect('/')
+  }
+}
+
+exports.deleteTask = async function (request, response) {
+  const id = request.params.idTask
+  const user = request.session.userid
+  // change deleted property to true
+  try {
+    const taskToDelete = await Task.findOneAndUpdate(
+      { _id: id, userId: user },
+      { deleted: true }
+    )
+    console.log('task to delete: ', taskToDelete)
+    console.log('deleted task: ', id, user)
+
+    response.status(200).send('ok')
+  } catch (err) {
+    console.log('not found or error deleting', err)
   }
 }

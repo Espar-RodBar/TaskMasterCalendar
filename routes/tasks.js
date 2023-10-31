@@ -7,5 +7,6 @@ tasksRouter.get('/', auth, tasksController.getTasks)
 tasksRouter.get('/tasks/:year/:month', auth, tasksController.getTasksMonth)
 tasksRouter.get('/tasks/:year/:month/:day', auth, tasksController.getTaskDay)
 tasksRouter.post('/tasks/', auth, tasksController.postTaskDay)
+tasksRouter.patch('/tasks/:idTask', auth, tasksController.deleteTask)
 
 module.exports = tasksRouter

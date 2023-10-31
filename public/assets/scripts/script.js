@@ -38,6 +38,24 @@ async function fetchTasks(url) {
   }
 }
 
+async function deleteTask() {
+  const id = this.dataset.taskId
+  const url = '/tasks/' + id
+  try {
+    const response = await fetch(url, {
+      method: 'patch',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ data: 'id number: ' + id }),
+    })
+    console.log('deleted...')
+    // localStorage.reload()
+    return
+  } catch (err) {
+    console.log('error deleting task:', err)
+    return
+  }
+}
+
 function clearFormInputs() {
   document.querySelector('#taskDurationInput').value = '2'
   document.querySelector('#taskTimeInput').value = ''
@@ -55,30 +73,40 @@ function addPrevMonthLink() {
   return prevMonthUrl
 }
 
+function delRenderedTasks(parentUlEl) {
+  Array.from(parentUlEl.querySelectorAll('li')).forEach((el) => el.remove())
+}
+
+function addEventBtnRemoveTask(parentUlEl) {
+  Array.from(parentUlEl.querySelectorAll('.delete-btn')).forEach((el) => {
+    el.addEventListener('click', deleteTask)
+  })
+}
+
 function renderTasks(parentUlEl, tasksAr) {
-  for (const tasks of tasksAr) {
-    const taskEl = ` <li>
-            <div class="day-task vertical-flex">
+  for (const task of tasksAr) {
+    const taskEl = ` <li class="list-el-task" >
+            <div class="day-task vertical-flex" >
               <header>
-                <h3 class="event-title">${tasks.taskName}</h3>
-                por <span>${tasks.userName}</span>
+                <h3 class="event-title">${task.taskName}</h3>
+                por <span>${task.userName}</span>
               </header>
               <p>
                 Horario:<span
-                  >${tasks.startHour
+                  >${task.startHour
                     .toString()
-                    .padStart(2, '0')}:${tasks.startMinutes
+                    .padStart(2, '0')}:${task.startMinutes
       .toString()
       .padStart(2, '0')}</span
                 >/<span
-                  >${tasks.endHour
-                    .toString()
-                    .padStart(2, '0')}:${tasks.endMinutes
+                  >${task.endHour.toString().padStart(2, '0')}:${task.endMinutes
       .toString()
       .padStart(2, '0')}</span
                 >
               </p>
-              <p>Eliminar</p>
+                <button class="delete-btn" data-task-id="${
+                  task._id
+                }">Eliminar</button>
             </div>
           </li>`
     parentUlEl.insertAdjacentHTML('beforeend', taskEl)
@@ -93,8 +121,8 @@ async function activateDialogHandler(e) {
     const [year, month, day] = clickedEl.dataset.fulldate.split('-')
     taskDateLblEl.textContent = `${day}/${Number(month) + 1}/${year}`
     const tasks = await fetchTasks(`/tasks/${year}/${Number(month) + 1}/${day}`)
-    console.log(tasks)
     renderTasks(tasksListEl, tasks)
+    addEventBtnRemoveTask(tasksListEl)
     addTaskModalEl.showModal()
   }
 }
@@ -114,6 +142,7 @@ window.addEventListener('load', initHandler)
 
 closeDialogBtnEl.addEventListener('click', (e) => {
   clearFormInputs()
+  delRenderedTasks(tasksListEl)
   addTaskModalEl.close()
 })
 

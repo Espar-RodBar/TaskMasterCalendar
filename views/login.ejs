@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Document</title>
+    <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <form action="/login" method="post">
-      <h2>Login ejs</h2>
-      <div class="input-field">
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter Username"
-        />
-      </div>
-      <div class="input-field">
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter Password"
-        />
-      </div>
-      <button>LogIn</button>
-    </form>
-    <section>
-      <a href="/signup">If you are new, sign up with us!</a>
-    </section>
+    <header class="header-main"><%- include('partials/header.ejs') %></header>
+    <body>
+      <form action="/login" method="post">
+        <h2>Login ejs</h2>
+        <div class="input-field">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter Username"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter Password"
+          />
+        </div>
+        <button>LogIn</button>
+      </form>
+      <section>
+        <a href="/signup">If you are new, sign up with us!</a>
+      </section>
+    </body>
+
+    <footer></footer>
   </body>
 </html>

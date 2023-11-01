@@ -8,10 +8,29 @@
   --dark-red-color: rgb(150, 42, 27);
   --dark-blue-color: rgb(20, 110, 150);
   --dark-green-color: rgb(40, 110, 50);
+  --max-widthBig: 60rem;
+  --max-widthSmall: 30rem;
 }
+
+/*******************************
+** HEADER *********************/
+.header-main {
+  margin: 0 auto;
+  max-width: var(--max-widthBig);
+}
+.header-main .main-nav {
+}
+
+.header-main .logo {
+  width: 5rem;
+  height: 100%;
+}
+/*******************************
+** MAIN   *********************/
+
 body {
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;
+  max-width: var(--max-widthBig);
 }
 
 form {
@@ -177,6 +196,10 @@ fieldset {
   );
   transform: scale(1.01);
 }
+
+/*******************************
+** FOOTER *********************/
+
 /* HELPER */
 .vertical-flex {
   display: flex;

@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/assets/css/reset.css" />
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <title>TASKS CALENDAR</title>
+    <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <header><h1>Hello to TASKS CALENDAR</h1></header>
-    <section></section>
+    <header class="header-main"><%- include('partials/header.ejs') %></header>
+    <main>
+      <section>
+        <h1>Hello to TASKS CALENDAR</h1>
+        <p>With this app, you can add or remove tasks.</p>
+        <p>
+          Just log in if you have an account or sign up and create a new one!
+        </p>
+        <ul>
+          <li>
+            <a href="/signup">Sign up with us!</a>
+          </li>
+          <li><a href="/login">Log in!</a></li>
+          <li>
+            <a href="<%= calendarUrl %>">Go to calendar!</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer></footer>
   </body>
 </html>

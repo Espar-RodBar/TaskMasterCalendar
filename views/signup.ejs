@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <title>Document</title>
+    <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <form action="/signup" method="post">
-      <h2>Register</h2>
-      <div class="input-field">
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter your name"
-          required
-        />
-      </div>
-      <div class="input-field">
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter Username"
-          required
-        />
-      </div>
-      <div class="input-field">
-        <input
-          type="password"
-          name="password"
-          id="password"
-          required
-          placeholder="Enter Password"
-        />
-      </div>
-      <div class="input-field">
-        <input
-          type="password"
-          name="password"
-          id="passwordRepeated"
-          placeholder="Repeat Password"
-          required
-        />
-      </div>
-      <button>Register</button>
-    </form>
-    <section>
-      <a href="/login">If you have an account, log in!</a>
-    </section>
+    <header class="header-main"><%- include('partials/header.ejs') %></header>
+    <main>
+      <form action="/signup" method="post">
+        <h2>Register</h2>
+        <div class="input-field">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter Username"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            required
+            placeholder="Enter Password"
+          />
+        </div>
+        <div class="input-field">
+          <input
+            type="password"
+            name="password"
+            id="passwordRepeated"
+            placeholder="Repeat Password"
+            required
+          />
+        </div>
+        <button>Register</button>
+      </form>
+      <section>
+        <a href="/login">If you have an account, log in!</a>
+      </section>
+    </main>
+    <footer></footer>
   </body>
 </html>

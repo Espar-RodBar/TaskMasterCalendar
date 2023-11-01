@@ -1,13 +1,5 @@
 const Task = require('../models/task')
 
-exports.getTasks = async function (request, response) {
-  const today = new Date()
-  // Date counts month from 0 -> 11. So  +1 to convert to  1 -> 12
-  const month = today.getMonth() + 1
-  const year = today.getFullYear()
-  response.status(200).redirect(`/dates/${year}/${month}`)
-}
-
 exports.getTaskDay = async function (request, response) {
   const { year, month, day } = request.params
   const userId = request.session.userid

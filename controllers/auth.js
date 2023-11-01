@@ -71,3 +71,12 @@ exports.logout = (request, response) => {
   request.session.destroy()
   response.redirect('/')
 }
+
+exports.index = async function (request, response) {
+  const today = new Date()
+  // Date counts month from 0 -> 11. So  +1 to convert to  1 -> 12
+  const month = today.getMonth() + 1
+  const year = today.getFullYear()
+  const url = `/dates/${year}/${month}`
+  response.status(200).render('index.ejs', { calendarUrl: url })
+}

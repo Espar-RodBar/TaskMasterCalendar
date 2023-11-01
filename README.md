@@ -1,6 +1,6 @@
-# Todo List Room Calendar
+# TaskMasterCalendar
 
-With Todo-List-Room-Calendar a group of people (friends, job partners, ..) can reserve a room for a task, selecting day and time.
+With Todo-List-Calendar a group of people (friends, job partners, ..) can add task, selecting day and time.
 
 **Link to project:** http://
 

@@ -5,8 +5,8 @@
   </head>
   <body>
     <header class="header-main"><%- include('partials/header.ejs') %></header>
-    <body>
-      <form action="/login" method="post">
+    <section class="section-main">
+      <form class="form-user" action="/login" method="post">
         <h2>Login ejs</h2>
         <div class="input-field">
           <input
@@ -26,11 +26,10 @@
         </div>
         <button>LogIn</button>
       </form>
-      <section>
-        <a href="/signup">If you are new, sign up with us!</a>
-      </section>
-    </body>
-
-    <footer></footer>
+    </section>
+    <section>
+      <a href="/signup">If you are new, sign up with us!</a>
+    </section>
+    <footer class="footer"></footer>
   </body>
 </html>

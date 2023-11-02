@@ -9,7 +9,13 @@
   --dark-blue-color: rgb(20, 110, 150);
   --dark-green-color: rgb(40, 110, 50);
   --max-widthBig: 60rem;
-  --max-widthSmall: 30rem;
+  --max-widthMedium: 50rem;
+  --max-widthSmall: 40rem;
+}
+
+body {
+  margin: 0 auto;
+  max-width: var(--max-widthBig);
 }
 
 /*******************************
@@ -17,6 +23,15 @@
 .header-main {
   margin: 0 auto;
   max-width: var(--max-widthBig);
+  min-height: 10dvh;
+  background: linear-gradient(
+    to right,
+    var(--light-blue-color) 0 5%,
+    var(--main-blue-color),
+    var(--dark-blue-color) 95% 100%
+  );
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 1rem;
 }
 .header-main .main-nav {
 }
@@ -27,15 +42,29 @@
 }
 /*******************************
 ** MAIN   *********************/
-
-body {
-  margin: 0 auto;
-  max-width: var(--max-widthBig);
+main {
+  height: 65dvh;
+  min-height: 30rem;
 }
 
-form {
+.section-main {
+  margin: 4rem auto;
+  max-width: var(--max-widthSmall);
+}
+
+.arrow-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+form,
+.form-user {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.form-user {
+  max-width: 20rem;
 }
 
 .input-field {
@@ -199,7 +228,19 @@ fieldset {
 
 /*******************************
 ** FOOTER *********************/
+.footer {
+  /* min-height: 10rem; */
+  min-height: 20dvh;
+  background: linear-gradient(
+    to right,
+    var(--light-green-color) 0 5%,
+    var(--main-green-color),
+    var(--dark-green-color) 95% 100%
+  );
 
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 /* HELPER */
 .vertical-flex {
   display: flex;

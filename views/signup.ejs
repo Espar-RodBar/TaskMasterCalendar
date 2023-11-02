@@ -6,50 +6,52 @@
   <body>
     <header class="header-main"><%- include('partials/header.ejs') %></header>
     <main>
-      <form action="/signup" method="post">
-        <h2>Register</h2>
-        <div class="input-field">
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Enter your name"
-            required
-          />
-        </div>
-        <div class="input-field">
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter Username"
-            required
-          />
-        </div>
-        <div class="input-field">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            required
-            placeholder="Enter Password"
-          />
-        </div>
-        <div class="input-field">
-          <input
-            type="password"
-            name="password"
-            id="passwordRepeated"
-            placeholder="Repeat Password"
-            required
-          />
-        </div>
-        <button>Register</button>
-      </form>
+      <section class="section-main">
+        <form class="form-user" action="/signup" method="post">
+          <h2>Register</h2>
+          <div class="input-field">
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+          <div class="input-field">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter Username"
+              required
+            />
+          </div>
+          <div class="input-field">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              placeholder="Enter Password"
+            />
+          </div>
+          <div class="input-field">
+            <input
+              type="password"
+              name="password"
+              id="passwordRepeated"
+              placeholder="Repeat Password"
+              required
+            />
+          </div>
+          <button>Register</button>
+        </form>
+      </section>
       <section>
         <a href="/login">If you have an account, log in!</a>
       </section>
     </main>
-    <footer></footer>
+    <footer class="footer"></footer>
   </body>
 </html>

@@ -4,15 +4,25 @@
     <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <header class="header-main"><%- include('partials/header.ejs') %></header>
+    <header class="header-main">
+      <%- include('partials/header.ejs') %>
+      <p><span>Hola name </span>,<a href="/logout">logout</a></p>
+    </header>
 
     <main>
-      <section>
-        <header>Calendar</header>
+      <section class="section-main">
+        <header><h1>Mastertask Calendar</h1></header>
 
         <div class="wrapper">
           <div class="calendar horizontal-flex">
-            <div class="prev-month-btn"><a href="">◀︎</a></div>
+            <div class="prev-month-btn">
+              <a href=""
+                ><img
+                  class="arrow-icon"
+                  src="/assets/images/icons8-back-to-50.png"
+                  alt="left-arrow"
+              /></a>
+            </div>
             <table id="calendar-table">
               <caption>
                 <span class="month-name">Month</span>
@@ -81,7 +91,14 @@
                 <td id="cel42"></td>
               </tr>
             </table>
-            <div class="next-month-btn"><a href="">►</a></div>
+            <div class="next-month-btn">
+              <a href=""
+                ><img
+                  class="arrow-icon"
+                  src="/assets/images/icons8-next-page-50.png"
+                  alt="right-arrow"
+              /></a>
+            </div>
           </div>
         </div>
       </section>
@@ -148,8 +165,6 @@
         </fieldset>
       </form>
     </dialog>
-    <footer>
-      <a href="/logout">logout</a>
-    </footer>
+    <footer class="footer"></footer>
   </body>
 </html>

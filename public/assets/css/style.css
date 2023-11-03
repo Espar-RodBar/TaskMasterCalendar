@@ -16,6 +16,12 @@
 body {
   margin: 0 auto;
   max-width: var(--max-widthBig);
+  background: linear-gradient(
+    to right,
+    rgba(160, 160, 160, 0.5) 0%,
+    rgba(231, 231, 231, 0.5) 10% 90%,
+    rgba(160, 160, 160, 0.5) 100%
+  );
 }
 
 /*******************************
@@ -32,8 +38,12 @@ body {
   );
   border-top-right-radius: 1rem;
   border-top-left-radius: 1rem;
+
+  display: flex;
 }
 .header-main .main-nav {
+  padding: 0 2rem;
+  flex-basis: 100%;
 }
 
 .header-main .logo {
@@ -52,9 +62,23 @@ main {
   max-width: var(--max-widthSmall);
 }
 
-.arrow-icon {
-  height: 2.5rem;
-  width: 2.5rem;
+.section-main > * {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.section-main > form {
+  margin: 0 auto 3rem;
+}
+
+.section-main > .auth-links {
+  max-width: 30rem;
+  margin: 0 auto 3rem;
+}
+
+.section-main > .auth-links > li {
+  display: block;
+  padding: 1rem;
 }
 
 form,
@@ -253,4 +277,9 @@ fieldset {
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.icon {
+  height: 2.5rem;
+  width: 2.5rem;
 }

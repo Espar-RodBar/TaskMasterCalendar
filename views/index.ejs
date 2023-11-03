@@ -7,18 +7,39 @@
     <header class="header-main"><%- include('partials/header.ejs') %></header>
     <main>
       <section class="section-main">
-        <h1>Hello to TASKS CALENDAR</h1>
-        <p>With this app, you can add or remove tasks.</p>
+        <h1>Hello to MASTERTASKS CALENDAR</h1>
+        <p>With this app, you can add or remove tasks on a calendar.</p>
+        <p>You have no excuses about forgetting your todos!</p>
         <p>
           Just log in if you have an account or sign up and create a new one!
         </p>
-        <ul>
+        <ul class="auth-links">
           <li>
-            <a href="/signup">Sign up with us!</a>
+            <a href="/signup"
+              ><img
+                class="icon"
+                src="/assets/images/icons8-join-64.png"
+                alt="A join us icon"
+              />Sign up with us!</a
+            >
           </li>
-          <li><a href="/login">Log in!</a></li>
           <li>
-            <a href="<%= calendarUrl %>">Go to calendar!</a>
+            <a href="/login"
+              ><img
+                class="icon"
+                src="/assets/images/icons8-login-48.png"
+                alt="A log in icon"
+              />Log in!</a
+            >
+          </li>
+          <li>
+            <a href="<%= calendarUrl %>"
+              ><img
+                class="icon"
+                src="/assets/images/icons8-calendar-64.png"
+                alt="A draw of a calendar"
+              />Go to calendar!</a
+            >
           </li>
         </ul>
       </section>

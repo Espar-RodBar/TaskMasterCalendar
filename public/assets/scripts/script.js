@@ -88,10 +88,11 @@ function addEventBtnRemoveTask(parentUlEl) {
 function renderTasks(parentUlEl, tasksAr) {
   for (const task of tasksAr) {
     const taskEl = ` <li class="list-el-task" >
-            <div class="day-task vertical-flex" >
+            <div class="day-task horizontal-flex" >
+            <div class="task-wrapper vertical-flex">
               <header>
                 <h3 class="event-title">${task.taskName}</h3>
-                por <span>${task.userName}</span>
+                <span>por ${task.userName}</span>
               </header>
               <p>
                 Horario:<span
@@ -106,6 +107,7 @@ function renderTasks(parentUlEl, tasksAr) {
       .padStart(2, '0')}</span
                 >
               </p>
+              </div>
                 <button class="delete-btn" data-task-id="${
                   task._id
                 }">Eliminar</button>

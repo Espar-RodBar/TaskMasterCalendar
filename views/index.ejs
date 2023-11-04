@@ -4,7 +4,21 @@
     <%- include('partials/head.ejs') %>
   </head>
   <body>
-    <header class="header-main"><%- include('partials/header.ejs') %></header>
+    <header class="header-main">
+      <%- include('partials/header.ejs') %>
+      <p class="logout-user">
+        <% if(user) { %>
+        <span>Hola <%= user %> </span>,<a href="/logout"
+          ><img
+            class="icon"
+            src="/assets/images/icons8-logout-64.png"
+            alt="A log out us icon"
+            logout
+          />logout</a
+        >
+        <% } %>
+      </p>
+    </header>
     <main>
       <section class="section-main">
         <h1>Hello to MASTERTASKS CALENDAR</h1>
@@ -14,6 +28,7 @@
           Just log in if you have an account or sign up and create a new one!
         </p>
         <ul class="auth-links">
+          <% if(!user) { %>
           <li>
             <a href="/signup"
               ><img
@@ -32,6 +47,7 @@
               />Log in!</a
             >
           </li>
+          <% } %>
           <li>
             <a href="<%= calendarUrl %>"
               ><img

@@ -78,5 +78,6 @@ exports.index = async function (request, response) {
   const month = today.getMonth() + 1
   const year = today.getFullYear()
   const url = `/dates/${year}/${month}`
-  response.status(200).render('index.ejs', { calendarUrl: url })
+  const user = request.session.user
+  response.status(200).render('index.ejs', { user, calendarUrl: url })
 }

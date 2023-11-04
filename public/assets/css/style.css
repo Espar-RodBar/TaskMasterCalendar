@@ -40,6 +40,7 @@ body {
   border-top-left-radius: 1rem;
 
   display: flex;
+  align-items: center;
 }
 .header-main .main-nav {
   padding: 0 2rem;
@@ -80,6 +81,18 @@ main {
   display: block;
   padding: 1rem;
 }
+
+/** AUTH ICONS CENTERING **/
+.section-main > .auth-links > li > a,
+.form-user button,
+.logout-user a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/** END AUTH ICONS **/
 
 form,
 .form-user {
@@ -126,7 +139,6 @@ form button:hover {
   transform: scale(1.01);
 }
 
-/* CLIENT */
 .calendar th,
 .calendar td {
   padding: 0.5rem;
@@ -143,7 +155,7 @@ form button:hover {
 }
 
 .row > td.today {
-  box-shadow: inset 0 0 0 2px green;
+  box-shadow: inset 0 0 0 2px var(--main-green-color);
 }
 .row > td.task {
   position: relative;
@@ -153,22 +165,22 @@ form button:hover {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: blue;
+  background: var(--dark-blue-color);
   position: absolute;
   top: 5px;
   right: 5px;
 }
 .day-events {
-  background: lightblue;
-  width: 20rem;
+  background: var(--light-blue-color);
   min-height: 10rem;
+  max-height: 20rem;
+
+  border-radius: 5px;
   align-items: center;
+  overflow-y: scroll;
+  color: white;
 
   padding: 1rem;
-}
-.day-event > * {
-  display: inline-block;
-  background-color: rgb(117, 174, 192);
 }
 
 /* dialog */
@@ -176,7 +188,31 @@ form button:hover {
 }
 .list-tasks > li {
   margin: 0.2rem;
+  padding: 0.25rem;
+  border-radius: 5px;
   background-color: rgb(117, 117, 255);
+}
+
+.list-tasks .task-wrapper header span {
+  font-size: 0.8rem;
+}
+.list-tasks .delete-btn {
+  background: linear-gradient(
+    to right,
+    var(--light-red-color),
+    var(--main-red-color)
+  );
+  color: white;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.list-tasks .delete-btn:hover {
+  background: linear-gradient(
+    to right,
+    var(--main-red-color),
+    var(--dark-red-color)
+  );
+  transform: scale(1.02);
 }
 
 #AddTaskDialog {
@@ -226,7 +262,7 @@ fieldset {
     var(--main-red-color),
     var(--dark-red-color)
   );
-  transform: scale(1.01);
+  transform: scale(1.05);
 }
 
 #addTaskBtn {
@@ -247,7 +283,7 @@ fieldset {
     var(--main-green-color),
     var(--dark-green-color)
   );
-  transform: scale(1.01);
+  transform: scale(1.05);
 }
 
 /*******************************

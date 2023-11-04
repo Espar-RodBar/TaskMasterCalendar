@@ -6,7 +6,18 @@
   <body>
     <header class="header-main">
       <%- include('partials/header.ejs') %>
-      <p><span>Hola name </span>,<a href="/logout">logout</a></p>
+      <p class="logout-user">
+        <% if(user) { %>
+        <span>Hola <%= user %> </span>,<a href="/logout"
+          ><img
+            class="icon"
+            src="/assets/images/icons8-logout-64.png"
+            alt="A log out us icon"
+            logout
+          />logout</a
+        >
+        <% } %>
+      </p>
     </header>
 
     <main>

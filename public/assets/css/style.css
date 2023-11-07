@@ -1,4 +1,7 @@
 :root {
+  --light-blue-color-50: rgba(80, 190, 220, 0.05);
+  --light-red-color: rgba(230, 100, 100, 0.006);
+  --light-green-color: rgba(90, 220, 159, 0.081);
   --light-red-color: rgb(230, 100, 100);
   --light-blue-color: rgb(80, 190, 220);
   --light-green-color: rgb(90, 220, 160);
@@ -61,6 +64,10 @@ main {
 .section-main {
   margin: 4rem auto;
   max-width: var(--max-widthSmall);
+}
+
+.section-main header h1 {
+  font-size: 2rem;
 }
 
 .section-main > * {
@@ -139,6 +146,19 @@ form button:hover {
   transform: scale(1.01);
 }
 
+/** Calendar table ***/
+
+.section-main .calendar {
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 2px var(--light-blue-color-50),
+    0 0 10px 3px var(--light-green-color), 0 0 10px 5px var(--light-red-color);
+}
+
+.section-main .month-name {
+  font-size: 1.6rem;
+}
+
 .calendar th,
 .calendar td {
   padding: 0.5rem;
@@ -184,6 +204,11 @@ form button:hover {
 }
 
 /* dialog */
+#AddTaskDialog {
+  border-radius: 5px;
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.097);
+  border: none;
+}
 .list-tasks {
 }
 .list-tasks > li {

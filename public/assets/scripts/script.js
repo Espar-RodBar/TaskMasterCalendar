@@ -108,9 +108,7 @@ function renderTasks(parentUlEl, tasksAr) {
                 >
               </p>
               </div>
-                <button class="delete-btn" data-task-id="${
-                  task._id
-                }">Eliminar</button>
+                <button class="delete-btn" data-task-id="${task._id}">X</button>
             </div>
           </li>`
     parentUlEl.insertAdjacentHTML('beforeend', taskEl)

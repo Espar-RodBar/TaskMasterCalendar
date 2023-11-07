@@ -8,7 +8,7 @@
       <%- include('partials/header.ejs') %>
       <p class="logout-user">
         <% if(user) { %>
-        <span>Hola <%= user %> </span>,<a href="/logout"
+        <span>Hi <%= user %> </span>,<a href="/logout"
           ><img
             class="icon"
             src="/assets/images/icons8-logout-64.png"
@@ -39,13 +39,13 @@
                 <span class="month-name">Month</span>
               </caption>
               <tr class="row row-header">
-                <th scope="col">Lu</th>
-                <th scope="col">Ma</th>
-                <th scope="col">Mi</th>
-                <th scope="col">Ju</th>
-                <th scope="col">Vi</th>
+                <th scope="col">Mo</th>
+                <th scope="col">Tu</th>
+                <th scope="col">We</th>
+                <th scope="col">Th</th>
+                <th scope="col">Fr</th>
                 <th scope="col">Sa</th>
-                <th scope="col">Do</th>
+                <th scope="col">Su</th>
               </tr>
               <tr class="row">
                 <td id="cel1"></td>
@@ -120,18 +120,18 @@
         <header>TASKS</header>
         <ul class="list-tasks"></ul>
       </div>
-      <header class="dialog-title"><p>Reserva de sala</p></header>
+      <header class="dialog-title"><p>Task for today</p></header>
       <button id="closeDialogBtn">X</button>
       <form method="POST" action="/tasks">
         <fieldset class="vertical-flex">
-          <legend>Añade titulo:</legend>
+          <legend>Title:</legend>
           <label
             ><input id="taskNameInput" type="text" name="taskName" required />
           </label>
           <label class="taskDatelbl"></label
           ><input type="text" name="taskDate" class="taskDate" />
           <label
-            >Hora inicio:<input
+            >Start hour:<input
               type="time"
               list="timeValues"
               name="timeStart"
@@ -156,7 +156,7 @@
             </datalist>
           </label>
           <label
-            >Duracion (1 / 2 / 3 ) horas<input
+            >Duration (1 / 2 / 3 ) hours<input
               type="range"
               name="duration"
               list="values"
@@ -172,7 +172,7 @@
             <option value="2" label="2"></option>
             <option value="3" label="3"></option>
           </datalist>
-          <button type="submit" id="addTaskBtn">Añadir</button>
+          <button type="submit" id="addTaskBtn">Add</button>
         </fieldset>
       </form>
     </dialog>

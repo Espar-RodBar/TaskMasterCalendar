@@ -4,18 +4,18 @@ export class Calendar {
     this.todayDate = new Date()
     this.todayDateStrdateStr = `${this.todayDate.getFullYear()}-${this.todayDate.getMonth()}-${this.todayDate.getDate()}`
     this.monthNames = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Setiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ]
   }
 

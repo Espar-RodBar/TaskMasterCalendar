@@ -5,11 +5,12 @@ exports.getTaskDay = async function (request, response) {
   const userId = request.session.userid
   const deleted = false
   try {
+    // FIXME duplication code
     const tasksToday = await Task.find({ month, year, day, deleted, userId })
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
-    response.status(500)
+    response.status(500).send({ status: 500, body: 'error getting day tasks' })
   }
 }
 
@@ -18,11 +19,14 @@ exports.getTasksMonth = async function (request, response) {
   const userId = request.session.userid
   const deleted = false
   try {
+    // FIXME duplication code
     const tasksToday = await Task.find({ month, year, deleted, userId })
     response.status(200).send({ status: 200, body: JSON.stringify(tasksToday) })
   } catch (err) {
     console.log('error getting tasks')
-    response.status(500)
+    response
+      .status(500)
+      .send({ status: 500, body: 'error getting month tasks' })
   }
 }
 
@@ -60,7 +64,7 @@ exports.postTaskDay = async function (request, response) {
 exports.deleteTask = async function (request, response) {
   const id = request.params.idTask
   const userId = request.session.userid
-  console.log('put delete', userId)
+
   // change deleted property to true
   try {
     const taskToDelete = await Task.findOneAndUpdate(

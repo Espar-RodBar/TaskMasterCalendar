@@ -8,14 +8,20 @@ exports.auth = function (request, response, next) {
 }
 
 exports.postLogin = async (request, response) => {
-  const { username, password } = request.body
+  const username = request.body.username
+  const password = request.body.password
 
-  const query = User.where({ userName: username, password: password })
+  const query = User.where({ userName: username })
 
   try {
     const userFound = await query.findOne()
 
-    if (userFound) {
+    console.log(userFound)
+    console.log('is password ok?:', await userFound.comparePassword(password))
+
+    const passwordCorrect = await userFound.comparePassword(password)
+
+    if (userFound && passwordCorrect) {
       request.session.user = userFound.userName
       request.session.userid = userFound.id
       response.redirect('/')

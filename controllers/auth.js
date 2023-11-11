@@ -12,7 +12,7 @@ exports.postLogin = async (request, response) => {
   const password = request.body.password
 
   const query = User.where({ userName: username })
-
+  let errorMsg = ''
   try {
     const userFound = await query.findOne()
 
@@ -26,8 +26,8 @@ exports.postLogin = async (request, response) => {
       request.session.userid = userFound.id
       response.redirect('/')
     } else {
-      console.log('Invalid username or password')
-      response.redirect('/login')
+      errorMsg = 'Invalid username or password'
+      response.render('login.ejs', { msg: errorMsg })
     }
   } catch (err) {
     console.log('error on post login: ', err)
@@ -38,15 +38,16 @@ exports.postLogin = async (request, response) => {
 exports.getLogin = (request, response) => {
   if (request.session.userid) {
     response.redirect('/')
-  } else response.render('login.ejs')
+  } else response.render('login.ejs', { msg: '' })
 }
 
 exports.getSignUp = (request, response) => {
-  response.render('signup.ejs')
+  response.render('signup.ejs', { msg: '' })
 }
 
 exports.postSignUp = async (request, response) => {
   const { name, username, password } = request.body
+  let msg = ''
   // check if the fields are not empty and the password is correct
   if (username && name && password[0] && password[0] === password[1]) {
     // check if the user exist
@@ -64,12 +65,12 @@ exports.postSignUp = async (request, response) => {
       await dbUser.save()
       response.redirect('/login')
     } catch (err) {
-      console.log('Error saving user')
-      response.redirect('/signup')
+      errorMsg = 'Error saving user'
+      response.render('signup.ejs', { msg: errorMsg })
     }
   } else {
-    console.log('bad input values')
-    response.redirect('/signup')
+    errorMsg = 'bad input values'
+    response.render('signup.ejs', { msg: errorMsg })
   }
 }
 

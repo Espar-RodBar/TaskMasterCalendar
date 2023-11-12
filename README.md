@@ -17,7 +17,7 @@ The calendar is created in the client side, while the data is managed by the ser
 ## Optimizations
 
 - Refact task controller: some duplication code.
-- Add an email and the use of difficult password, with the se a server side validator for the input data.
+- Add an email and the use of difficult password, with a server side validator for the input data.
 - Add a reset password function.
 - Add a user panel, with all the task, and some configuration options.
 - The app only shows the task from the signed user. A nice feature to add can be to make some task private or public,

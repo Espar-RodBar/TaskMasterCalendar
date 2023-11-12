@@ -1,7 +1,7 @@
 :root {
-  --light-blue-color-50: rgba(80, 190, 220, 0.05);
-  --light-red-color: rgba(230, 100, 100, 0.006);
-  --light-green-color: rgba(90, 220, 159, 0.081);
+  --light-blue-color-50: rgba(80, 190, 220, 0.5);
+  --light-red-color-50: rgba(230, 100, 100, 0.5);
+  --light-green-color-50: rgba(90, 220, 159, 0.5);
   --light-red-color: rgb(230, 100, 100);
   --light-blue-color: rgb(80, 190, 220);
   --light-green-color: rgb(90, 220, 160);
@@ -157,8 +157,12 @@ form button:hover {
 .section-main .calendar {
   padding: 1rem;
   border-radius: 5px;
-  box-shadow: 0 0 10px 2px var(--light-blue-color-50),
-    0 0 10px 3px var(--light-green-color), 0 0 10px 5px var(--light-red-color);
+  box-shadow: 0 0 40px white, 10px 0 80px var(--light-blue-color-50),
+    -10px 0 80px var(--light-green-color-50), inset 0 0 80px white,
+    inset 20px 0 80px var(--light-blue-color-50),
+    inset 20px 0 400px var(--light-blue-color-50),
+    inset -20px 0 80px var(--light-green-color-50),
+    inset -20px 0 400px var(--light-green-color-50);
 }
 
 .section-main .month-name {
@@ -349,4 +353,30 @@ fieldset {
 .icon {
   height: 2.5rem;
   width: 2.5rem;
+}
+
+.icon-animated {
+  animation-duration: 2s;
+  animation-name: smallBig;
+  animation-iteration-count: infinite;
+  transition: all 0.3s;
+}
+
+.animateDelay5 {
+  animation-delay: 500ms;
+}
+.animateDelay10 {
+  animation-delay: 1000ms;
+}
+
+@keyframes smallBig {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

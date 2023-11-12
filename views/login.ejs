@@ -5,39 +5,41 @@
   </head>
   <body>
     <header class="header-main"><%- include('partials/header.ejs') %></header>
-    <section class="section-main">
-      <header><h1>Mastertask Calendar</h1></header>
-      <form class="form-user" action="/login" method="post">
-        <h2>Login</h2>
-        <div class="input-field">
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Enter Username"
-          />
-        </div>
-        <div class="input-field">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Enter Password"
-          />
-        </div>
-        <div class="error-msg"><%= msg %></div>
-        <button>
-          <img
-            class="icon"
-            src="/assets/images/icons8-login-48.png"
-            alt="A log in icon"
-          />LogIn
-        </button>
-      </form>
-    </section>
-    <section>
-      <a href="/signup">If you are new, sign up with us!</a>
-    </section>
+    <main>
+      <section class="section-main">
+        <header><h1>Mastertask Calendar</h1></header>
+        <form class="form-user" action="/login" method="post">
+          <h2>Login</h2>
+          <div class="input-field">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter Username"
+            />
+          </div>
+          <div class="input-field">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter Password"
+            />
+          </div>
+          <div class="error-msg"><%= msg %></div>
+          <button>
+            <img
+              class="icon icon-animated"
+              src="/assets/images/icons8-login-48.png"
+              alt="A log in icon"
+            />LogIn
+          </button>
+        </form>
+      </section>
+      <section>
+        <a href="/signup">If you are new, sign up with us!</a>
+      </section>
+    </main>
     <footer class="footer"></footer>
   </body>
 </html>

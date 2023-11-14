@@ -182,6 +182,7 @@ form button:hover {
   text-align: center;
   vertical-align: middle;
   font-size: 1.4rem;
+  cursor: pointer;
 }
 
 .row > td.today {
@@ -200,30 +201,19 @@ form button:hover {
   top: 5px;
   right: 5px;
 }
-.day-events {
-  background: var(--light-blue-color);
-  min-height: 10rem;
-  max-height: 20rem;
-
-  border-radius: 5px;
-  align-items: center;
-  overflow-y: scroll;
-  color: white;
-
-  padding: 1rem;
-}
 
 /* dialog */
 #AddTaskDialog {
+  position: relative;
+  padding: 3rem 2rem 2rem;
   border-radius: 5px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.097);
   border: none;
 }
-.list-tasks {
-}
+
 .list-tasks > li {
   margin: 0.2rem;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 5px;
   background-color: rgb(117, 117, 255);
 }
@@ -231,6 +221,7 @@ form button:hover {
 .list-tasks .task-wrapper header span {
   font-size: 0.8rem;
 }
+
 .list-tasks .delete-btn {
   background: linear-gradient(
     to right,
@@ -240,7 +231,10 @@ form button:hover {
   color: white;
   border-radius: 4px;
   transition: all 0.3s;
+
+  cursor: pointer;
 }
+
 .list-tasks .delete-btn:hover {
   background: linear-gradient(
     to right,
@@ -250,15 +244,13 @@ form button:hover {
   transform: scale(1.02);
 }
 
-#AddTaskDialog {
-  position: relative;
-  padding: 3rem 2rem 2rem;
-}
-
 fieldset {
   padding: 1rem;
   border-radius: 5px;
   border: 2px solid var(--main-blue-color);
+}
+fieldset legend {
+  padding: 0.25rem 0.5rem;
 }
 
 .taskDate {
@@ -288,6 +280,9 @@ fieldset {
   );
   color: white;
   border-radius: 4px;
+
+  cursor: pointer;
+
   transition: all 0.3s;
 }
 
@@ -311,7 +306,10 @@ fieldset {
   margin-top: 2rem;
   padding: 0.4rem;
   transition: all 0.3s;
+
+  cursor: pointer;
 }
+
 #addTaskBtn:hover {
   background: linear-gradient(
     to right,
@@ -319,6 +317,31 @@ fieldset {
     var(--dark-green-color)
   );
   transform: scale(1.05);
+}
+
+.day-events {
+  background: var(--light-blue-color-50);
+  min-height: 10rem;
+  max-height: 20rem;
+
+  border-radius: 5px;
+  align-items: center;
+  overflow-y: scroll;
+  color: white;
+
+  padding: 1rem;
+}
+
+/* end dialog */
+
+.section-auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.section-auth span {
+  color: var(--dark-green-color);
+  border-bottom: 1px solid var(--main-green-color);
 }
 
 /*******************************

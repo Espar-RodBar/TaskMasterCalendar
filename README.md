@@ -4,8 +4,6 @@ With Todo-List-Calendar a group of people (friends, job partners, ..) can add ta
 
 **Link to project:** http://
 
-![alt tag](http://)
-
 ## How It's Made:
 
 **Tech used:** HTML, CSS, JavaScript, MongoDb, Mongoose, NodeJS and Express
@@ -29,4 +27,4 @@ With this project i use the express-sessions to keep control of the user signed 
 Struggle a little with bcrypt hashing the password.
 Rethinking the schemas of tasks, first i used dates in the fields, but later switch it to just numbers. Easier to just play with numerical fields values, and no issues with different dates representation from the frontend and the backend.
 
-From the views, i used partials to DRY the templates and no duplicate code.
+From the views, i used partials to DRY the templates avoiding duplicate code.

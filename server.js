@@ -45,7 +45,8 @@ app.use('/', mainRouter)
 app.use('/', tasksRouter)
 app.use('/', datesRouter)
 
+const PORT = process.env.PORT || 8000
 // Open server port
-app.listen(8000, () => {
-  console.log('server running... port 8000')
+app.listen(PORT, () => {
+  console.log(`server running... port ${PORT}`)
 })
